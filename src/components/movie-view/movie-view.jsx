@@ -10,8 +10,7 @@ export class MovieView extends React.Component {
   }
 
   handleClick = () => {
-    console.log('hello');
-    this.props.history.push('/');    
+    this.props.onClickBack();    
   };
 
   render() {

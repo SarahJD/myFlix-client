@@ -35767,9 +35767,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this);
 
     _this.handleClick = function () {
-      console.log('hello');
-
-      _this.props.history.push('/');
+      _this.props.onClickBack();
     };
 
     _this.state = {};
@@ -35903,6 +35901,13 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "onClickBack",
+    value: function onClickBack() {
+      this.setState({
+        selectedMovie: null
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -35917,7 +35922,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+        movie: selectedMovie,
+        onClickBack: this.onClickBack
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
@@ -36095,7 +36101,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53498" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62541" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
