@@ -18,7 +18,7 @@ export class MovieView extends React.Component {
     
     if (!movie) return null;
 
-    return (
+    return ( 
       <div className="movie-view">
         <img className="movie-poster" src={movie.ImagePath} />
         <div className="movie-title">
