@@ -1,5 +1,21 @@
-.my-flix {
-  color: steelblue;
+.moviecard {
+  color: black;
+  background-color: #af9f30;
+  margin-top: 10rem;
+}
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
+:root {
+  --background-color: #bc0a0f;
+  --btn-color: ##efc081;
+  --deco-color: #af9f30;
+  --font-color: #efeee9;
+  --font-color-alt: #000;
+}
+
+body {
+  font-family: "Playfair Display", serif;
+  color: var(--font-color);
+  background: var(--background-color);
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */

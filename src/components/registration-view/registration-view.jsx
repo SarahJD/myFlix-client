@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export function RegistrationView(props) {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
@@ -15,26 +19,42 @@ export function RegistrationView(props) {
   };
 
   return (
-    <form>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label>
-        Birthday:
-        <input type="date" value={birthday} onChange={e => setBirthday(e.target.value)} />
-      </label>
-      <button type="button" onClick={handleRegistration}>Register</button>
-    </form>
-  );
+    <Form>
+      <Form.Row className="justify-content-md-center">
+      <Col md={3}>
+        <h1 className="mb-4">Registration</h1>
+        <Form.Group controlId="">
+          <Form.Label>Username: </Form.Label>
+          <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter your name" />
+          <Form.Text className="text-muted">
+            First Name and Last Name
+          </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address: </Form.Label>
+          <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" />
+        </Form.Group>
+        <Form.Group controlId="">
+          <Form.Label>Birthday: </Form.Label>
+          <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+          <Form.Text className="text-muted">
+            YYYY-MM-DD
+          </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password: </Form.Label>
+          <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a password" />
+          <Form.Text className="text-muted">
+            No restrictions
+          </Form.Text>
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
+          Register
+        </Button>
+        </Col>
+        </Form.Row>
+      </Form>
+  )
 }
 
 RegistrationView.propTypes = {
