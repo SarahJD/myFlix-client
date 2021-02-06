@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
