@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import './movie-view.scss';
+ 
 
 export class MovieView extends React.Component {
 
@@ -11,10 +12,6 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-  handleClick = () => {
-    this.props.onClickBack();    
-  };
-
   render() {
     const { movie } = this.props;
     
@@ -22,32 +19,31 @@ export class MovieView extends React.Component {
 
     return ( 
       <React.Fragment>
-        <img className="movie-poster mt-4 mb-4" src={movie.ImagePath} />
-        <Table striped hover variant="dark" className="table">
-          <thead>
-            <tr>
-              <th>Title:</th>
-              <th>{movie.Title}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Description: </td>
-              <td>{movie.Description}</td>
-            </tr>
-            <tr>
-              <td>Genre: </td>
-              <td>{movie.Genre.Name}</td>
-            </tr>
-            <tr>
-              <td>Director: </td>
-              <td>{movie.Director.Name}</td>
-            </tr>
-          </tbody>
-        </Table>
-        <button type="submit" variant="dark" onClick={this.handleClick}>
-          Go back
-        </button>
+        <Container className="container">
+          <Row>
+            <Col>
+              <h1 className="title">{movie.Title}</h1>
+              <div>
+              <h2 className="subtitles">Genre:</h2>
+              <a className="links" href="#">{movie.Genre.Name}</a>  
+              </div>
+              <div>
+              <h2 className="subtitles">Director:</h2>
+              <a className="links" href="#">{movie.Director.Name}</a>
+              </div>
+              <div className="description">
+              <h2 className="subtitles">Description: </h2 >
+              <p>{movie.Description}</p>
+              </div>
+              <Button variant="dark" type="submit" className="button" onClick={this.props.onClickBack}>
+                 Go back
+              </Button>
+            </Col>
+            <Col>
+              <img className="movie-poster mt-4 mb-4" src={movie.ImagePath} />
+            </Col>
+          </Row>  
+        </Container>
       </React.Fragment>
 
     );
