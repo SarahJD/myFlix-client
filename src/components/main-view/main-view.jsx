@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Row, Col } from 'react-bootstrap';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view'
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import './main-view.scss'; 
 
 export class MainView extends React.Component {
   constructor() {
@@ -66,20 +66,26 @@ export class MainView extends React.Component {
 
     // If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, all movies will be returned 
     return (
-      <Row className="main-view justify-content-md-center">
-        {selectedMovie
-          ? (
-              <Col md={8} xs={6}>
-                <MovieView movie={selectedMovie} onClickBack={() => this.onClickBack()}/>
-              </Col>
-            )
-          : movies.map(movie => (
-              <Col md={3} xs={6}>
-                <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-              </Col>
-            ))
-        }
-      </Row>
+      <React.Fragment>
+        <Row className="myFlix-container">
+          <h1 className="myFlix">myFlix</h1> 
+        </Row>
+        <Row className="main-view justify-content-md-center">
+          
+          {selectedMovie
+            ? (
+                <Col md={8} xs={6}>
+                  <MovieView movie={selectedMovie} onClickBack={() => this.onClickBack()}/>
+                </Col>
+              )
+            : movies.map(movie => (
+                <Col md="auto" key={movie._id}> 
+                  <MovieCard  movie={movie} onClick={movie => this.onMovieClick(movie)}/>
+                </Col>
+              ))
+          }
+        </Row>
+      </React.Fragment>
     );
   }
 }
