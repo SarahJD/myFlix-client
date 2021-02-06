@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Row, Col, Button, Form } from 'react-bootstrap';
+import './login-view.scss';
 
 export function LoginView(props) {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
@@ -19,8 +17,10 @@ export function LoginView(props) {
   return (
     <Form>
     <Form.Row className="justify-content-md-center">
+      <h1 className="mb-4 mt-4">Login to myFlix</h1>
+    </Form.Row>
+    <Form.Row className="justify-content-md-center">
     <Col md={3}>
-      <h1 className="mb-4 mt-4">Login</h1>
       <Form.Group controlId="">
         <Form.Label>Username: </Form.Label>
         <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" />
@@ -29,7 +29,7 @@ export function LoginView(props) {
         <Form.Label>Password: </Form.Label>
         <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
       </Form.Group>
-      <Button variant="dark" className="mt-4 mb-4" type="submit" onClick={handleSubmit}>
+      <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
       <p>Don't have an account? <a href="#">Register</a></p>
