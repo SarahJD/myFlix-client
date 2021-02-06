@@ -1,0 +1,40 @@
+.container {
+  padding: 2rem;
+  color: #bfb161;
+}
+
+.title {
+  margin: 1rem 0 2rem;
+  font-size: 3rem;
+}
+
+.links {
+  color: #efc081;
+  font-size: 1.3rem;
+  text-decoration: underline;
+}
+
+.links:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.movie-poster {
+  height: 20rem;
+  margin: 8rem;
+}
+
+.subtitles {
+  width: 4.5rem;
+  font-size: 1.5rem;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.description {
+  margin: 1rem 0;
+}
+
+.button {
+  color: #af9f30;
+}

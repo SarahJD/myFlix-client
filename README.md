@@ -13,3 +13,8 @@ This interface was built using the React library that handles data through the p
 ## 4. Which API the project uses
 
 The project uses the [REST API](https://github.com/SarahJD/myFlix) I have built myself. It was built with React.
+c
+
+## 5. Design
+
+The UI was inspired by this color palette which was adapted for contrast improvement: https://www.canva.com/colors/color-palettes/rose-and-gold/

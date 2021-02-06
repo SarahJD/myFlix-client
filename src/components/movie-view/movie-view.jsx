@@ -1,5 +1,8 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import './movie-view.scss';
+ 
 
 export class MovieView extends React.Component {
 
@@ -9,38 +12,53 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
-  handleClick = () => {
-    this.props.onClickBack();    
-  };
-
   render() {
     const { movie } = this.props;
     
     if (!movie) return null;
 
-    return (
-      <div className="movie-view">
-        <img className="movie-poster" src={movie.ImagePath} />
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
-        <div className="movie-genre">
-          <span className="label">Genre: </span>
-          <span className="value">{movie.Genre.Name}</span>
-        </div>
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
-        </div>
-        <button type="button" onClick={this.handleClick}>
-      Go home
-    </button>
-      </div>
+    return ( 
+      <React.Fragment>
+        <Container className="container">
+          <Row>
+            <Col>
+              <h1 className="title">{movie.Title}</h1>
+              <div>
+              <h2 className="subtitles">Genre:</h2>
+              <a className="links" href="#">{movie.Genre.Name}</a>  
+              </div>
+              <div>
+              <h2 className="subtitles">Director:</h2>
+              <a className="links" href="#">{movie.Director.Name}</a>
+              </div>
+              <div className="description">
+              <h2 className="subtitles">Description: </h2 >
+              <p>{movie.Description}</p>
+              </div>
+              <Button variant="dark" type="submit" className="button" onClick={this.props.onClickBack}>
+                 Go back
+              </Button>
+            </Col>
+            <Col>
+              <img className="movie-poster mt-4 mb-4" src={movie.ImagePath} />
+            </Col>
+          </Row>  
+        </Container>
+      </React.Fragment>
+
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired, 
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    })
+  }).isRequired,
+  onClickBack: PropTypes.func.isRequired
+};

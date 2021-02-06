@@ -1,5 +1,14 @@
-$color: steelblue;
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
 
-.my-flix {
-  color: $color;
+:root {
+  --background-color: #bc0a0f; // Scarlet
+  --btn-color: #efc081; // Freesia
+  --font-color: #bfb161; // Gold (e.g. for borders)
+  --font-color-alt: #000; // White
+}
+
+body {
+  font-family: "Playfair Display", serif;
+  color: var(--font-color);
+  background: var(--background-color);
 }
