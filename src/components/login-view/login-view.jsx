@@ -45,7 +45,7 @@ export function LoginView(props) {
         Submit
       </Button>
       <p>Don't have an account? 
-        <Link to={`/register`}>
+        <Link to="/register">
           <Button variant="link">Register</Button>
         </Link>
       </p>
