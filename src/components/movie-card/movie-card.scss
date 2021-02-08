@@ -1,7 +1,15 @@
 .moviecard {
-  color: black;
+  color: #000;
   background-color: #bfb161;
   margin-top: 10rem;
   overflow: hidden;
   height: 40rem;
+}
+
+.linkmov {
+  color: #000;
+}
+
+.linkmov:hover {
+  color: #bc0a0f;
 }
