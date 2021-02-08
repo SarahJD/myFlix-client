@@ -8,28 +8,52 @@ export function RegistrationView(props) {
   const [ email, setEmail ] = useState('');
   const [ birthday, setBirthday ] = useState('');
 
+  /*
+  // for validation
+  const txtFieldState = {
+    value: "",
+    valid: true,
+    typeMismatch: false,
+    errMsg: "..."
+  };
+
+  state: {
+    username: { ... txtFieldState, fieldName: "Username", required: true, requiredTxt: "Username is required"}, 
+    password: { ... txtFieldState, fieldName: "Password", required: true, requiredTxt: "Password is required"},
+    email: { ...txtFieldState, fieldName: "Email", required: true, requiredTxt: "Email is required", formatErrorTxt: "Incorrect email format" },
+    birthday: {... txtFieldState, fieldName: "Birthday", required: false},
+    allFieldsValid: false
+  };
+  */
+
+
+
   const handleRegistration = (e) => {
     e.preventDefault();
     console.log(username, password, email, birthday);
     props.onRegister('test');
-    // send data to the server for putting it into MongoDB, then show LoginView (but how?)
+    // send dahandlta to the server for putting it into MongoDB, then show LoginView (but how?)
   };
 
   return (
-    <Form>
+    <Form className="form-inside-input" onSubmit={this.onSubmit} noValidate>
       <Form.Row className="justify-content-md-center">
       <Col md={3}>
         <h1 className="mb-4">Registration</h1>
         <Form.Group controlId="">
           <Form.Label>Username: </Form.Label>
-          <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter your name" />
+          <Form.Control type="text" name="txtFname" value={username} onChange={e => setUsername(e.target.value)} placeholder="Create a Username" required />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password: </Form.Label>
+          <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a Password" required />
           <Form.Text className="text-muted">
-            First Name and Last Name
+            No restrictions
           </Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicEmail">
+         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address: </Form.Label>
-          <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" />
+          <Form.Control type="email" name="txtEmail" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" required/>
         </Form.Group>
         <Form.Group controlId="">
           <Form.Label>Birthday: </Form.Label>
@@ -38,14 +62,7 @@ export function RegistrationView(props) {
             YYYY-MM-DD
           </Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password: </Form.Label>
-          <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a password" />
-          <Form.Text className="text-muted">
-            No restrictions
-          </Form.Text>
-        </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" onClick={handleRegistration}>
           Register
         </Button>
         </Col>
@@ -55,6 +72,7 @@ export function RegistrationView(props) {
 }
 
 RegistrationView.propTypes = {
+  
   username: PropTypes.string.isRequired,  
   password: PropTypes.string.isRequired, 
   email: PropTypes.string.isRequired,
