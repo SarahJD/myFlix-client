@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 import './login-view.scss';
 
 export function LoginView(props) {
@@ -9,9 +10,18 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    // send a request to the server for authentication, then call props.onLoggedIn(username)
-    props.onLoggedIn (username); // allows to automatically be logged in
+    /* Send a request to the server for authentication */
+    axios.post('https://myflixwomo.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    })
+    .then(response => {
+      const data = response.data;
+      props.onLoggedIn (data);  // triggers the onLoggedIn method of the "main-view.jsx" file
+    })
+    .catch(e => {
+      console.log('no such user')
+    });
   };
 
   return (
