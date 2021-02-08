@@ -8,17 +8,6 @@
   font-size: 3rem;
 }
 
-.links {
-  color: #efc081;
-  font-size: 1.3rem;
-  text-decoration: underline;
-}
-
-.links:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
 .movie-poster {
   height: 20rem;
   margin: 8rem;
@@ -37,4 +26,13 @@
 
 .button {
   color: #af9f30;
+}
+
+.link {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.link:hover {
+  color: #fff;
 }
