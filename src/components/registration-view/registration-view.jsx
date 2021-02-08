@@ -31,10 +31,22 @@ export function RegistrationView(props) {
   const handleRegistration = (e) => {
     e.preventDefault();
     console.log(username, password, email, birthday);
-    props.onRegister('test');
-    // send dahandlta to the server for putting it into MongoDB, then show LoginView (but how?)
+    axios.post('https://myflixwomo.herokuapp.com/users', {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    })
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      window.open('/', '_self'); // '_self' in order to open the page in the current tab and redirect to login ('/')
+    })
+    .catch(e => {
+      console.log('error registering the user')
+    });
   };
-
+    
   return (
     <Form className="form-inside-input" onSubmit={this.onSubmit} noValidate>
       <Form.Row className="justify-content-md-center">
