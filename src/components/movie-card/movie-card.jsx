@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
 import './movie-card.scss';
+import { Link } from 'react-router-dom';
 
 export class MovieCard extends React.Component {
   render() {
     // given by MainView which is connected to the database via the movies endpoints in the API
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
 
     return (
       <Card style={{ width: '16rem' }} className="m-2 moviecard">
@@ -14,7 +15,9 @@ export class MovieCard extends React.Component {
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description.substring(0, 140)}</Card.Text>
-          <Button variant="outline-dark" onClick={() => onClick(movie)}>More</Button>
+          <Link to={`/movies/${movie._id}`} >
+          <Button variant="link" className="linkmov">Read More</Button>
+          </Link>
         </Card.Body>
       </Card>
     );
@@ -30,6 +33,5 @@ MovieCard.propTypes = {
       Name: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired
     })
-  }).isRequired,
-  onClick: PropTypes.func.isRequired
+  }).isRequired
 };
