@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './login-view.scss';
 
 export function LoginView(props) {
@@ -25,6 +26,7 @@ export function LoginView(props) {
   };
 
   return (
+    <Router>
     <Form>
     <Form.Row className="justify-content-md-center">
       <h1 className="mb-4 mt-4">Login to myFlix</h1>
@@ -42,11 +44,15 @@ export function LoginView(props) {
       <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
-      <p>Don't have an account? <a href="#">Register</a></p>
+      <p>Don't have an account? 
+        <Link to={`/register`}>
+          <Button variant="link">Register</Button>
+        </Link>
+      </p>
       </Col>
       </Form.Row>
     </Form>
-
+</Router>
   );
 }
 
@@ -54,6 +60,5 @@ LoginView.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,  
     password: PropTypes.string.isRequired, 
-  }),
-  onLoggedIn: PropTypes.func.isRequired
+  })
 }
