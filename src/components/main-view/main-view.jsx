@@ -59,6 +59,11 @@ export class MainView extends React.Component {
       this.getMovies(authData.token); 
     }
 
+    handleLogOut = () => {
+      accessToken: localStorage.removeItem('token');
+      user: localStorage.removeItem('user');
+    }
+
   render() {
     const { movies, user } = this.state;
 
@@ -73,7 +78,12 @@ export class MainView extends React.Component {
       <Router>
         <div className="main-view">
         <Row>
-          <h1 className="myFlix">myFlix</h1>
+          <Col md={10}>
+            <h1 className="myFlix">myFlix</h1>
+          </Col>
+          <Col>
+            <Button className="btn" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
+          </Col>
         </Row>
         <Row>
           <Route exact path="/" render={() => {
