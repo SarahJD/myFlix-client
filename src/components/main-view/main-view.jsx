@@ -2,13 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
 import './main-view.scss'; 
 
 export class MainView extends React.Component {
@@ -61,15 +62,16 @@ export class MainView extends React.Component {
     }
 
     handleLogOut = () => {
-      accessToken: localStorage.removeItem('token');
-      user: localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = window.location.href
     }
 
   render() {
     const { movies, user } = this.state;
 
-    // If there is no user, the LoginView is rendered. If there is a user logged in, the user details are passed as a prop to the LoginView
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+    // The LoginView is going to be shown if there is no user, only when the register route is on, is will not be shown (but the RegistrationView)
+    if (!user && !window.location.href.includes('/register')) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view"/>;
@@ -83,17 +85,23 @@ export class MainView extends React.Component {
             <h1 className="myFlix">myFlix</h1>
           </Col>
           <Col>
+            <Link to="/profile">
+              <Button className="btn" variant="dark">Profile</Button> 
+            </Link>
+          </Col>
+          <Col>
             <Button className="btn" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
           </Col>
         </Row>
         <Row>
           <Route exact path="/" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+            //if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return movies.map(m => <MovieCard key={m._id} movie={m} />)
           }
           }/>
         </Row>
           <Route path="/register" render={() => <RegistrationView />} />
+          <Route path="/profile" render={() => <ProfileView />} />
           <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
           <Route exact path="/genres/:name" render={({match}) => { 
             if (!movies) return <div className="main-view" />;
