@@ -14,9 +14,9 @@ export class GenreView extends React.Component {
   }
 
   render() {
-    const { movies, genre } = this.props;
+    const { movie, genre } = this.props;
     
-    if (!genre) return null;
+    if (!movie) return null;
 
     return ( 
       <React.Fragment>
@@ -24,8 +24,8 @@ export class GenreView extends React.Component {
           <Row>
             <Col>
               <div>
-                <h1>{genre.Genre.Name}</h1>
-                <p>{genre.Genre.Description}</p>
+                <h1>{genre.Name}</h1>
+                <p>{movie.Genre.Description}</p>
                 <h2>Some movies that belong to this genre</h2>
                 {/* if ({movies.Genre.Name}===(movieparams.Genre.Name) then display movie, else don't display movie
               movies.map(m => <MovieCard key={m._id} movie={m} )*/}
@@ -38,25 +38,6 @@ export class GenreView extends React.Component {
     );
   }
 }
-
-
-{/*export function GenreView(props) {
-  const [ movie, setMovie ] = useState('');
-    
-  return (
-    <React.Fragment>
-    <h1>{movie.Genre.Name}</h1>
-    <p>{movie.Genre.Description}</p>
-    <h2>Some movies that belong to this genre</h2>
-     if ({movies.Genre.Name}===(movieparams.Genre.Name) then display movie, else don't display movie
-    movies.map(m => <MovieCard key={m._id} movie={m} )
-
-    <Link to="/movies" >
-      <Button variant="dark" className="button mt-4 mb-4" type="submit">Go back</Button>
-    </Link>
-    </React.Fragment>
-  )
-} */}
 
 {/*GenreView.propTypes = {
   movie: PropTypes.shape({ 
