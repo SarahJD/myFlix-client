@@ -4,20 +4,13 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './genre-view.scss';
 
+import { MovieCard } from '../movie-card/movie-card';
 
-export class GenreView extends React.Component {
+export function GenreView (props) {
 
-  constructor() {
-    super();
-
-    this.state = {};
-  }
-
-  render() {
-    const { movie, genre } = this.props;
+  console.log(props);
+    const { movies, genre } = props;
     
-    if (!movie) return null;
-
     return ( 
       <React.Fragment>
         <Container className="container">
@@ -25,10 +18,9 @@ export class GenreView extends React.Component {
             <Col>
               <div>
                 <h1>{genre.Name}</h1>
-                <p>{movie.Genre.Description}</p>
+                <p>{genre.Description}</p>
                 <h2>Some movies that belong to this genre</h2>
-                {/* if ({movies.Genre.Name}===(movieparams.Genre.Name) then display movie, else don't display movie
-              movies.map(m => <MovieCard key={m._id} movie={m} )*/}
+                {movies.filter(m => m.Genre.Name === genre.Name).map(m => <MovieCard key={m._id} movie={m}/>)}
               </div>
             </Col>
           </Row>  
@@ -37,13 +29,17 @@ export class GenreView extends React.Component {
 
     );
   }
-}
 
-{/*GenreView.propTypes = {
-  movie: PropTypes.shape({ 
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
+
+GenreView.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Name: PropTypes.string,
+      Description: PropTypes.string
     })
-  }).isRequired
-  };*/}
+  ),
+  genre: PropTypes.shape({
+    Name: PropTypes.string,
+      Description: PropTypes.string
+    })
+  }
