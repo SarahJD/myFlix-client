@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, useLocation } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -32,7 +32,7 @@ export class MainView extends React.Component {
       // Assign the result to the state
       this.setState({
         movies:response.data
-      });
+      }); 
     })
     .catch(function(error) {
       console.log(error);
@@ -69,9 +69,11 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, user } = this.state;
-
+    //const location = useLocation();
+   
     // The LoginView is going to be shown if there is no user, only when the register route is on, is will not be shown (but the RegistrationView)
     if (!user && !window.location.href.includes('/register')) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+    if (!user && window.location.href.includes('/register')) return <RegisterView />
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view"/>;
@@ -105,7 +107,7 @@ export class MainView extends React.Component {
           <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
           <Route exact path="/genres/:name" render={({match}) => { 
             if (!movies) return <div className="main-view" />;
-            return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre}/>} }/>
+            return <GenreView movies={this.state.movies} genre={ (movies.length > 0) ? movies.find(m => m.Genre.Name === match.params.name).Genre : {} }/>} }/>
           <Route exact path="/directors/:name" render={({match}) => { 
             if (!movies) return <div className="main-view" />;
             return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
