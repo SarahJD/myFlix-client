@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import './genre-view.scss';
 
 import { MovieCard } from '../movie-card/movie-card';
 
 export function GenreView (props) {
 
-  console.log(props);
     const { movies, genre } = props;
     
     return ( 
