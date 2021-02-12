@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './login-view.scss';
 
 export function LoginView(props) {
@@ -26,33 +26,31 @@ export function LoginView(props) {
   };
 
   return (
-    <Router>
     <Form>
-    <Form.Row className="justify-content-md-center">
-      <h1 className="mb-4 mt-4">Login to myFlix</h1>
-    </Form.Row>
-    <Form.Row className="justify-content-md-center">
-    <Col md={3}>
-      <Form.Group controlId="">
-        <Form.Label>Username: </Form.Label>
-        <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" />
-      </Form.Group>
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Password: </Form.Label>
-        <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
-      </Form.Group>
-      <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button>
-      <p>Don't have an account? 
-        <Link to="/register">
-          <Button variant="link">Register</Button>
-        </Link>
-      </p>
-      </Col>
+      <Form.Row className="justify-content-md-center">
+        <h1 className="mb-4 mt-4">Login to myFlix</h1>
+      </Form.Row>
+      <Form.Row className="justify-content-md-center">
+        <Col md={3}>
+          <Form.Group controlId="">
+            <Form.Label>Username: </Form.Label>
+            <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password: </Form.Label>
+            <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" />
+          </Form.Group>
+          <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          <p>Don't have an account? 
+            <Link to="register">
+              <Button variant="link">Register</Button>
+            </Link>
+          </p>
+        </Col>
       </Form.Row>
     </Form>
-</Router>
   );
 }
 
