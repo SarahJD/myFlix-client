@@ -2,14 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 
-import { BrowserRouter as Router, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
+
 import './main-view.scss'; 
 
 export class MainView extends React.Component {
@@ -68,50 +70,52 @@ export class MainView extends React.Component {
     }
 
   render() {
-    const { movies, user } = this.state;
-    //const location = useLocation();
-   
+    const { movies, user } = this.state;   
     // The LoginView is going to be shown if there is no user, only when the register route is on, is will not be shown (but the RegistrationView)
-    if (!user && !window.location.href.includes('/register')) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-    if (!user && window.location.href.includes('/register')) return <RegisterView />
+    //if (!user && !window.location.href.includes('/register')) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+   // if (!user && window.location.href.includes('/register')) return <RegisterView />
 
     // Before the movies have been loaded
-    if (!movies) return <div className="main-view"/>;
-
+    //if (!movies) return <div className="main-view"/>;
     // If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, all movies will be returned 
     return (
       <Router>
         <div className="main-view">
-        <Row>
-          <Col md={10}>
-            <h1 className="myFlix">myFlix</h1>
-          </Col>
-          <Col>
-            <Link to="/profile">
-              <Button className="btn" variant="dark">Profile</Button> 
-            </Link>
-          </Col>
-          <Col>
-            <Button className="btn" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
-          </Col>
-        </Row>
-        <Row>
-          <Route exact path="/" render={() => {
-            //if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} />)
-          }
-          }/>
-        </Row>
-          <Route path="/register" render={() => <RegistrationView />} />
-          <Route path="/profile" render={() => <ProfileView />} />
-          <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
-          <Route exact path="/genres/:name" render={({match}) => { 
-            if (!movies) return <div className="main-view" />;
-            return <GenreView movies={this.state.movies} genre={ (movies.length > 0) ? movies.find(m => m.Genre.Name === match.params.name).Genre : {} }/>} }/>
-          <Route exact path="/directors/:name" render={({match}) => { 
-            if (!movies) return <div className="main-view" />;
-            return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director}/>}
-          } />
+
+          {user && (
+            <Row>
+              <Col md={10}>
+                <h1 className="myFlix">myFlix</h1>
+              </Col>
+              <Col>
+                <Link to="/profile">
+                  <Button className="btn" variant="dark">Profile</Button> 
+                </Link>
+              </Col>
+              <Col>
+                <Button className="btn" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
+              </Col>
+            </Row>
+          )}
+
+
+          <Switch>
+
+            {/* Home is the default route */}
+            <Route exact path="/" render={() => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return movies.map(m => <MovieCard key={m._id} movie={m} />)}}/>
+            <Route exact path="/register" render={() => <RegistrationView />} />
+            <Route exact path="/profile" render={() => <ProfileView user={this.state.user} movies={this.state.movies} />} />
+            <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+            {/* Even if the movie object is loaded later, show the route */}
+            <Route exact path="/genres/:name" render={({match}) => { 
+              if (!movies) return <div className="main-view" />;
+              return <GenreView movies={this.state.movies} genre={ (movies.length > 0) ? movies.find(m => m.Genre.Name === match.params.name).Genre : {} }/>} }/>
+            <Route exact path="/directors/:name" render={({match}) => { 
+              if (!movies) return <div className="main-view" />;
+              return <DirectorView movies={this.state.movies} director={ (movies.length > 0) ? movies.find(m => m.Director.Name === match.params.name).Director : {} }/>} }/>
+          </Switch>
         </div>
       </Router>
     );
