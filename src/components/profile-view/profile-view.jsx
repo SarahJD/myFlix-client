@@ -1,15 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Card, Container} from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Button, Card, Container, Form, Row, Col} from "react-bootstrap/Button";
+import { Link } from 'react-router-dom';
+import './profile-view.scss';
 
-import "./profile-view.scss";
+import { MovieCard } from '../movie-card/movie-card';
 
 export class ProfileView extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
 
   componentDidMount = () => {
     let accessToken = localStorage.getItem('token');
@@ -72,8 +69,8 @@ export class ProfileView extends React.Component {
       });
   }
 
-  // toggle favorite movie
-  toggleFavorite = (m) => {
+  // Toggle favorite movie
+  toggleFavorite = m => {
     if (user.FavoriteMovies.includes(m)) {
       user.FavoriteMovies.map (() => {
         let i = FavoriteMovies.indexOf(m);
@@ -82,32 +79,34 @@ export class ProfileView extends React.Component {
       } else {
         FavoriteMovies.push(m);
       }
-    }
+    } 
 
     render() {
       const { user, movies } = this.props;
-      console.log(movies);
+      console.log(user);
       return (
         <Container>
           <Link to={"/"}>
             <Button>Back</Button>
           </Link>
           <Card>
-            <h2>Profile Information</h2>
+            <h2>Profile</h2>
             <h3>Username:</h3>
             <p>{user.Username}</p>
+            <h3>Password:</h3>
+            <p>{user.Password}</p>
             <h3>Email:</h3>
             <p>{user.Email}</p>
             <h3>Birthday:</h3>
             <p>{user.Birthday}</p>
             <h3>Favorite Movies:</h3>
             <p>
-              {user.FavoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)}
+            { user.FavoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
             </p>
-            {/* toggle function to deselect movie from FavoriteMovies */}
+            {/* toggle function to remove movie from FavoriteMovies */}
             <div>
               <Button className="toggle-btn" onClick={this.toggleFavorite}>
-                Add to my Favorite Movies              
+                Remove              
               </Button>
             </div>
             <div>
@@ -115,16 +114,6 @@ export class ProfileView extends React.Component {
                   Delete My Profile
                 </Button>
             </div>
-
-            {
-                filteredFavorites.map(favorite => {
-                  return (
-                    <li key={favorite._id} className="movie-item">{favorite.title} |
-                      <span className="delete-movie" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
-                    </li>
-                  )
-                })
-              }
             
             <Form className="form-inside-input" onSubmit={updateProfile} noValidate>
               <Form.Row className="justify-content-md-center">
