@@ -100,10 +100,9 @@ export class MainView extends React.Component {
 
 
           <Switch>
-
-            {/* Home is the default route */}
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              {/* Home is the default route */}
               return movies.map(m => <MovieCard key={m._id} movie={m} />)}}/>
             <Route exact path="/register" render={() => <RegistrationView />} />
             <Route exact path="/profile" render={() => <ProfileView user={this.state.user} movies={this.state.movies} />} />
