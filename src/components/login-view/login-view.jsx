@@ -101,7 +101,7 @@ export function LoginView(props) {
           </Button>
           <p>Don't have an account? 
             <Link to="register">
-              <Button variant="link">Register</Button>
+              <Button variant="link" className="register-link">Register</Button>
             </Link>
           </p>
         </Col>
