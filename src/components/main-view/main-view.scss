@@ -9,4 +9,11 @@
 
 .btn {
   color: #bfb161;
+  white-space: nowrap;
+}
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
