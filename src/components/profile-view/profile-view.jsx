@@ -8,8 +8,23 @@ import { MovieCard } from '../movie-card/movie-card';
 
 export class ProfileView extends React.Component {
 
-  componentDidMount = () => {
+  constructor() {
+    // Call the superclass constructor so React can initialize it
+    super();
+
+    this.state = {
+      movies: [],
+      user: null,
+      email: null,
+      password: null,
+      birthday: null,
+      favoriteMovies: []
+    };
+  }
+
+  componentDidMount() {
     let accessToken = localStorage.getItem('token');
+    console.log(user);
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem('user')
@@ -18,17 +33,20 @@ export class ProfileView extends React.Component {
     }
   }
 
-  getUser = (token) => {
-    axios.get('https://myflixwomo.herokuapp.com/login/users/', {
+  getUser(token) {
+    console.log('https://myflixwomo.herokuapp.com/users/' + user);
+    axios.get('https://myflixwomo.herokuapp.com/users/' + user, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         this.setState({
           username: response.data.Username,
           email: response.data.Email,
+          password: response.data.Password,
           birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies
         });
+        console.log(response.data.email);
       })
       .catch(function (error) {
         console.log(error);
@@ -43,7 +61,7 @@ export class ProfileView extends React.Component {
     })
       .then(response => {
         const data = response.data;
-        window.open("/client", "_self");
+        window.open("/", "_self");
         console.log(data);
         localStorage.clear();
       })
@@ -60,7 +78,7 @@ export class ProfileView extends React.Component {
     })
       .then(response => {
         const data = response.data;
-        window.open("/client", "_self");
+        //window.open("/", "_self");
         console.log(data);
         localStorage.clear();
       })
@@ -71,18 +89,18 @@ export class ProfileView extends React.Component {
 
   // Toggle favorite movie
   toggleFavorite = m => {
-    if (user.FavoriteMovies.includes(m)) {
-      user.FavoriteMovies.map (() => {
-        let i = FavoriteMovies.indexOf(m);
-        FavoriteMovies.splice(i, 1);
+    if (favoriteMovies.includes(m)) {
+      favoriteMovies.map (() => {
+        let i = favoriteMovies.indexOf(m);
+        favoriteMovies.splice(i, 1);
       })
       } else {
-        FavoriteMovies.push(m);
+        favoriteMovies.push(m);
       }
     } 
 
     render() {
-      const { user, movies } = this.props;
+      const { user, movies, email, password, birthday, favoriteMovies } = this.props;
       console.log(user);
       return (
         <Container>
@@ -92,16 +110,16 @@ export class ProfileView extends React.Component {
           <Card>
             <h2>Profile</h2>
             <h3>Username:</h3>
-            <p>{user.Username}</p>
+            <p>{user}</p>
             <h3>Password:</h3>
-            <p>{user.Password}</p>
+            <p>{password}</p>
             <h3>Email:</h3>
-            <p>{user.Email}</p>
+            <p>{email}</p>
             <h3>Birthday:</h3>
-            <p>{user.Birthday}</p>
+            <p>{birthday}</p>
             <h3>Favorite Movies:</h3>
             <p>
-            { user.FavoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
+            { favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
             </p>
             {/* toggle function to remove movie from FavoriteMovies */}
             <div>
