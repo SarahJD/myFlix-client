@@ -89,15 +89,17 @@ updateProfile = (e) => {
 
   // Toggle favorite movie
   toggleFavorite = m => {
-    if (favoriteMovies.includes(m)) {
-      favoriteMovies.map (() => {
-        let i = favoriteMovies.indexOf(m);
-        favoriteMovies.splice(i, 1);
+    this.setState ( state => {
+    if (state.favoriteMovies.includes(m)) {
+      state.favoriteMovies.map (() => {
+        let i = state.favoriteMovies.indexOf(m);
+        state.favoriteMovies.splice(i, 1);
       })
       } else {
-        favoriteMovies.push(m);
+        state.favoriteMovies.push(m);
       }
-    }
+    })
+  }
     
     render() {
       const { user, movies, email, password, birthday, favoriteMovies } = this.state;
