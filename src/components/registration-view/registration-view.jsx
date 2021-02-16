@@ -143,7 +143,7 @@ export function RegistrationView() {
             <Form.Label>Password: </Form.Label>
             <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a Password" />
             <Form.Text className="text-muted desc-text">
-            5-10 Characters
+              5-10 Characters
             </Form.Text>
             {Object.keys(passwordErr).map((key) => {
             return <div style={{ color: 'black' }}>{passwordErr[key]}</div>;
