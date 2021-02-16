@@ -85,7 +85,9 @@ export class MainView extends React.Component {
           {user && (
             <Row>
               <Col md={10}>
-                <h1 className="myFlix">myFlix</h1>
+                <Link to="/" className="myFlix" >
+                  myFlix
+                </Link> 
               </Col>
               <Col>
                 <Link to="/profile">
