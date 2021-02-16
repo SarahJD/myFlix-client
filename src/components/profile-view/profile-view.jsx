@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Card, Container, Form, Row, Col} from "react-bootstrap/Button";
+import { Button, Card, Container, Form, Row, Col} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './profile-view.scss';
 
@@ -8,33 +8,31 @@ import { MovieCard } from '../movie-card/movie-card';
 
 export class ProfileView extends React.Component {
 
-  constructor() {
+  constructor(props) {
     // Call the superclass constructor so React can initialize it
-    super();
+    super(props);
 
     this.state = {
       movies: [],
-      user: null,
-      email: null,
-      password: null,
-      birthday: null,
+      user: '',
+      email: '',
+      password: '',
+      birthday: '',
       favoriteMovies: []
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     let accessToken = localStorage.getItem('token');
-    console.log(user);
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem('user')
       })
-      this.getUser(accessToken);
+      this.getUser(accessToken, localStorage.getItem('user'));
     }
   }
 
-  getUser(token) {
-    console.log('https://myflixwomo.herokuapp.com/users/' + user);
+  getUser = (token, user) => {
     axios.get('https://myflixwomo.herokuapp.com/users/' + user, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -46,17 +44,35 @@ export class ProfileView extends React.Component {
           birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies
         });
-        console.log(response.data.email);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
+// Update Profile
+updateProfile = (e) => {
+  console.log(test);
+   e.preventDefault();
+  let token = localStorage.getItem('token')
+   axios.put('https://myflixwomo.herokuapp.com/users/' + props.user, {
+     headers: { Authorization: `Bearer ${token}` }
+   })
+     .then(response => {
+       const data = response.data;
+      // window.open("/", "_self");
+       console.log(data);
+       localStorage.clear();
+     })
+     .catch((e) => {
+       console.log("Error: User information was not updated");
+     });
+ }
+
   // Delete Profile
   deleteProfile = (e) => {
     e.preventDefault();
-    axios.delete('https://myflixwomo.herokuapp.com/login/users/', {
+    axios.delete('https://myflixwomo.herokuapp.com/users/', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -70,22 +86,6 @@ export class ProfileView extends React.Component {
       });
   }
 
-  // Update Profile
-  updateProfile = (e) => {
-    e.preventDefault();
-    axios.put('https://myflixwomo.herokuapp.com/login/users/', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        const data = response.data;
-        //window.open("/", "_self");
-        console.log(data);
-        localStorage.clear();
-      })
-      .catch((e) => {
-        console.log("Error: User information was not updated");
-      });
-  }
 
   // Toggle favorite movie
   toggleFavorite = m => {
@@ -97,74 +97,56 @@ export class ProfileView extends React.Component {
       } else {
         favoriteMovies.push(m);
       }
-    } 
-
+    }
+    
     render() {
-      const { user, movies, email, password, birthday, favoriteMovies } = this.props;
-      console.log(user);
+      const { user, movies, email, password, birthday, favoriteMovies } = this.state;
       return (
-        <Container>
-          <Link to={"/"}>
-            <Button>Back</Button>
-          </Link>
-          <Card>
-            <h2>Profile</h2>
-            <h3>Username:</h3>
-            <p>{user}</p>
-            <h3>Password:</h3>
-            <p>{password}</p>
-            <h3>Email:</h3>
-            <p>{email}</p>
-            <h3>Birthday:</h3>
-            <p>{birthday}</p>
-            <h3>Favorite Movies:</h3>
-            <p>
-            { favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
-            </p>
-            {/* toggle function to remove movie from FavoriteMovies */}
-            <div>
-              <Button className="toggle-btn" onClick={this.toggleFavorite}>
-                Remove              
-              </Button>
-            </div>
-            <div>
-              <Button className="delete-btn" onClick={this.deleteProfile}>
-                  Delete My Profile
-                </Button>
-            </div>
-            
-            <Form className="form-inside-input" onSubmit={updateProfile} noValidate>
+        <Container>            
+            <Form className="form-inside-input" noValidate>
               <Form.Row className="justify-content-md-center">
                 <Col md={3}>
-                  <h1 className="mb-4">Update My Profile Information</h1>
+                  <h1 className="mb-4">My Profile</h1>
                   <Form.Group controlId="">
                     <Form.Label>Username: </Form.Label>
-                    <Form.Control type="text" name="txtFname" value={username} onChange={e => setUsername(e.target.value)} placeholder="Create a Username" required />
+                    <Form.Control type="text" name="txtFname" value={user} onChange={e => this.setState(Object.assign(this.state, {}, { user: e.target.value }))} placeholder="Create a Username" required />
+                    <Form.Text className="text-muted desc-text">
+                      5-10 Characters
+                    </Form.Text>
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password: </Form.Label>
-                    <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a Password" required />
+                    <Form.Control type="password" value={password} onChange={e => this.setState(Object.assign(this.state, {}, { password: e.target.value }))} placeholder="Create a Password" required />
                     <Form.Text className="text-muted desc-text">
-                      No restrictions
+                      5-10 Characters
                     </Form.Text>
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address: </Form.Label>
-                    <Form.Control type="email" name="txtEmail" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" required/>
+                    <Form.Control type="email" name="txtEmail" value={email} onChange={e => this.setState(Object.assign(this.state, {}, { email: e.target.value }))} placeholder="Enter your email address" required/>
                   </Form.Group>
                   <Form.Group controlId="date">
                     <Form.Label>Birthday: </Form.Label>
-                    <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                    <Form.Control type="date" value={birthday} onChange={e => this.setState(Object.assign(this.state, {}, { birthday: e.target.value }))} placeholder="Enter your birthday" />
                   </Form.Group>
-                  <Button className="btn" variant="dark" className="button mt-4 mb-4" type="submit" onClick={updateProfile}>
+                  <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.updateProfile}>
                     Update
+                  </Button>
+                  <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.deleteProfile}>
+                    Delete My Profile
                   </Button>
                 </Col>
               </Form.Row>
             </Form>
 
-          </Card>
-        </Container>
-    )
-  }
+           {/* <div>
+            { favoriteMovies && favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
+              <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.toggleFavorite}>
+                  Remove              
+              </Button>
+            </div> */}
+
+        </Container>      
+      )
+    }
 }
