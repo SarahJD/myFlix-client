@@ -3,5 +3,35 @@
   "rules": {
     "quotes": ["error", "single"],
     "indent": ["error", 2]
+  },
+  "globals": {
+    "document": "readonly",
+    "window": "readonly", 
+    "import": "readonly", 
+    "console": "readonly",
+    "WebSocket": "readonly",
+    "location": "readonly",
+    "Reflect": "readonly",
+    "Symbol": "readonly",
+    "setTimeout": "readonly",
+    "onClick": "readonly",
+    "clearTimeout": "readonly",
+    "btoa": "readonly",
+    "XMLHttpRequest": "readonly",
+    "Promise": "readonly",
+    "navigator": "readonly",
+    "URLSearchParams":"readonly",
+    "ArrayBuffer": "readonly",
+    "FormData": "readonly",
+    "Set": "readonly",
+    "Map": "readonly",
+    "WeakSet": "readonly",
+    "Int32Array": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "WeakMap": "readonly",
+    "parcelRequire": "readonly",
+    "module": "readonly",
+    "define": "readonly",
+    "toString": "readonly"
   }
 }
