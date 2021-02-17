@@ -54,8 +54,9 @@ export class ProfileView extends React.Component {
 updateProfile = (e) => {
   console.log(test);
    e.preventDefault();
-  let token = localStorage.getItem('token')
-   axios.put('https://myflixwomo.herokuapp.com/users/' + props.user, {
+  let token = localStorage.getItem('token');
+  let user = localStorage.getItem('user');
+   axios.put('https://myflixwomo.herokuapp.com/users/' + user, {
      headers: { Authorization: `Bearer ${token}` }
    })
      .then(response => {
@@ -72,7 +73,9 @@ updateProfile = (e) => {
   // Delete Profile
   deleteProfile = (e) => {
     e.preventDefault();
-    axios.delete('https://myflixwomo.herokuapp.com/users/', {
+    let token = localStorage.getItem('token');
+    let user = localStorage.getItem('user');
+    axios.delete('https://myflixwomo.herokuapp.com/users/' + user, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
