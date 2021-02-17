@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Card, Container, Form, Row, Col} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Container, Form, Row, Col} from 'react-bootstrap';
+import moment from 'moment';
 import './profile-view.scss';
 
 import { MovieCard } from '../movie-card/movie-card';
@@ -9,7 +9,6 @@ import { MovieCard } from '../movie-card/movie-card';
 export class ProfileView extends React.Component {
 
   constructor(props) {
-    // Call the superclass constructor so React can initialize it
     super(props);
 
     this.state = {
@@ -43,12 +42,13 @@ export class ProfileView extends React.Component {
     })
       .then(response => {
         const favoriteMovies = this.props.movies.filter(value => response.data.FavoriteMovies.includes(value._id));
-        console.log(this.props.movies, favoriteMovies);
+        const birthday = moment(response.data.Birthday).format('DD.MM.YYYY');
+        console.log(birthday);
         this.setState({
           username: response.data.Username,
           email: response.data.Email,
           password: response.data.Password,
-          birthday: response.data.Birthday,
+          birthday,
           favoriteMovies
         });
       })
@@ -57,40 +57,35 @@ export class ProfileView extends React.Component {
       });
   }
 
-// Update Profile
-updateProfile = (e) => {
-  console.log(this.state);
-  const { username, password, email, birthday } = this.state;
-  e.preventDefault();
-  console.log('marker', this.formValidation()); 
-  if(!this.formValidation()) {
-    return;
-  };
-  let options = { 
-    Username: username, 
-    Password: password, 
-    Email: email, 
-    Birthday: birthday 
-  }
-  let token = localStorage.getItem('token');
-  let user = localStorage.getItem('user');
-    axios.put(`https://myflixwomo.herokuapp.com/users/${user}`, options, {
-     headers: { Authorization: `Bearer ${token}` }
-   })
-     .then(response => {
-       console.log('test');
-      const data = response.data;
-      document.getElementById('form-response').innerHTML = 'Your Profile Information has been updated.'; 
-      
-       console.log(data);
-       
+  // Update Profile
+  updateProfile = (e) => {
+    const { username, password, email, birthday } = this.state;
+    e.preventDefault();
+    if(!this.formValidation()) {
+      return;
+    };
+    let options = { 
+      Username: username, 
+      Password: password, 
+      Email: email, 
+      Birthday: birthday 
+    }
+    let token = localStorage.getItem('token');
+    let user = localStorage.getItem('user');
+      axios.put(`https://myflixwomo.herokuapp.com/users/${user}`, options, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        console.log('test');
+        const data = response.data;
+        document.getElementById('form-response').innerHTML = 'Your Profile Information has been updated.'; 
+               
        localStorage.clear();
      })
      .catch((e) => {
        console.log("Error: User information was not updated");
        this.formValidation(); 
      });
-     console.log('test2');
  }
 
   // Delete Profile
@@ -199,8 +194,9 @@ console.log(emailErr);
                       5-10 Characters
                     </Form.Text>
                     {Object.keys(this.state.usernameErr).map((key) => {
-                        return <div key={`${idx}`} style={{ color: 'black' }}>{usernameErr[key]}</div>;
+                        return <div style={{ color: 'black' }}>{usernameErr[key]}</div>;
                       })}
+                      {/*inside div: key={`${idx}`}*/}
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password: </Form.Label>
@@ -209,7 +205,7 @@ console.log(emailErr);
                       5-10 Characters
                     </Form.Text>
                     {Object.keys(this.state.passwordErr).map((key) => {
-                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.passwordErr[key]}</div>;
+                        return <div style={{ color: 'black' }}>{this.state.passwordErr[key]}</div>;
                       })}
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
