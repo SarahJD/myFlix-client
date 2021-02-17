@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -13,6 +14,8 @@ import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 
 import './main-view.scss'; 
+
+export const history = createBrowserHistory();
 
 export class MainView extends React.Component {
   constructor() {
@@ -66,7 +69,7 @@ export class MainView extends React.Component {
     handleLogOut = () => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = window.location.href
+      window.open("/", "_self")
     }
 
   render() {
@@ -79,7 +82,7 @@ export class MainView extends React.Component {
     //if (!movies) return <div className="main-view"/>;
     // If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, all movies will be returned 
     return (
-      <Router>
+      <Router history={history} >
         <div className="main-view">
 
           {user && (
