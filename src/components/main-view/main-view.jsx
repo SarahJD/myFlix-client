@@ -71,7 +71,7 @@ export class MainView extends React.Component {
       localStorage.removeItem('user');
       window.open("/", "_self")
     }
-
+    
   render() {
     const { movies, user } = this.state;   
     // The LoginView is going to be shown if there is no user, only when the register route is on, is will not be shown (but the RegistrationView)
