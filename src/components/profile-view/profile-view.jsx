@@ -14,11 +14,16 @@ export class ProfileView extends React.Component {
 
     this.state = {
       movies: [],
-      user: '',
+      username: '',
       email: '',
       password: '',
       birthday: '',
-      favoriteMovies: []
+      favoriteMovies: [],
+
+      usernameErr: {},
+      emailErr: {},
+      passwordErr: {},
+      birthdayErr: {}
     };
   }
 
@@ -33,16 +38,18 @@ export class ProfileView extends React.Component {
   }
 
   getUser = (token, user) => {
-    axios.get('https://myflixwomo.herokuapp.com/users/' + user, {
+    axios.get(`https://myflixwomo.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
+        const favoriteMovies = this.props.movies.filter(value => response.data.FavoriteMovies.includes(value._id));
+        console.log(this.props.movies, favoriteMovies);
         this.setState({
           username: response.data.Username,
           email: response.data.Email,
           password: response.data.Password,
           birthday: response.data.Birthday,
-          favoriteMovies: response.data.FavoriteMovies
+          favoriteMovies
         });
       })
       .catch(function (error) {
@@ -53,21 +60,37 @@ export class ProfileView extends React.Component {
 // Update Profile
 updateProfile = (e) => {
   console.log(this.state);
-   e.preventDefault();
+  const { username, password, email, birthday } = this.state;
+  e.preventDefault();
+  console.log('marker', this.formValidation()); 
+  if(!this.formValidation()) {
+    return;
+  };
+  let options = { 
+    Username: username, 
+    Password: password, 
+    Email: email, 
+    Birthday: birthday 
+  }
   let token = localStorage.getItem('token');
   let user = localStorage.getItem('user');
-   axios.put('https://myflixwomo.herokuapp.com/users/' + user, this.state, {
+    axios.put(`https://myflixwomo.herokuapp.com/users/${user}`, options, {
      headers: { Authorization: `Bearer ${token}` }
    })
      .then(response => {
-       const data = response.data;
-      // window.open("/", "_self");
+       console.log('test');
+      const data = response.data;
+      document.getElementById('form-response').innerHTML = 'Your Profile Information has been updated.'; 
+      
        console.log(data);
+       
        localStorage.clear();
      })
      .catch((e) => {
        console.log("Error: User information was not updated");
+       this.formValidation(); 
      });
+     console.log('test2');
  }
 
   // Delete Profile
@@ -75,13 +98,12 @@ updateProfile = (e) => {
     e.preventDefault();
     let token = localStorage.getItem('token');
     let user = localStorage.getItem('user');
-    axios.delete('https://myflixwomo.herokuapp.com/users/' + user, {
+    axios.delete(`https://myflixwomo.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         const data = response.data;
         window.open("/", "_self");
-        console.log(data);
         localStorage.clear();
       })
       .catch((e) => {
@@ -89,21 +111,78 @@ updateProfile = (e) => {
       });
   }
 
-
   // Toggle favorite movie
   toggleFavorite = m => {
-    this.setState ( state => {
+    let newFavorites = [];
     if (state.favoriteMovies.includes(m)) {
-      state.favoriteMovies.map (() => {
-        let i = state.favoriteMovies.indexOf(m);
-        state.favoriteMovies.splice(i, 1);
-      })
-      } else {
-        state.favoriteMovies.push(m);
-      }
-    })
+      newFavorites = this.state.favoriteMovies.filter((movie) => movie._id !== m._id)
+      this.setState({ favoriteMovies: newFavorites });
+      return 
+    } 
+    this.setState(state => { favoriteMovies: state.favoriteMovies.push(m)})
   }
-    
+  
+  formValidation = () => {
+    const { username, password, email, birthday } = this.state;
+    const usernameErr = {};
+    const passwordErr = {};
+    const emailErr = {};
+    const birthdayErr = {};
+    const emailReg = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    let checkEmail = emailReg.test(email);
+    let isValid = true;
+
+    if (birthday === '') {
+      birthdayErr.selectDate = 'Please Select a Date';
+      isValid = false;
+    }
+
+    if (username.trim().length < 5) {
+      usernameErr.userNameShort = 'Username is too short';
+      isValid = false;
+    }
+
+    if (username.trim().length > 10) {
+      usernameErr.userNameLong = 'Username is too long';
+      isValid = false;
+    }
+
+    if (username.trim().length === 0) {
+      usernameErr.userNameRequired = 'Username is required';
+      isValid = false;
+    }
+
+    if (password.trim().length < 5) {
+      passwordErr.passwordShort = 'Password is too short';
+      isValid = false;
+    }
+
+    if (password.trim().length > 50) {
+      passwordErr.passwordLong = 'Password is too long';
+      isValid = false;
+    }
+
+    if (password.trim().length === 0) {
+      passwordErr.passwordRequired = 'Password is required';
+      isValid = false;
+    }
+
+    if (!checkEmail) {
+      emailErr.emailInvalid = 'Invalid Email';
+      isValid = false;
+    }
+console.log(emailErr);
+
+    this.setState({
+      usernameErr, 
+      birthdayErr,
+      passwordErr,
+      emailErr
+    })
+   
+    return isValid;
+  };
+
     render() {
       const { user, movies, email, password, birthday, favoriteMovies } = this.state;
       return (
@@ -112,12 +191,16 @@ updateProfile = (e) => {
               <Form.Row className="justify-content-md-center">
                 <Col md={3}>
                   <h1 className="mb-4">My Profile</h1>
+                  <div id="form-response"></div>
                   <Form.Group controlId="">
                     <Form.Label>Username: </Form.Label>
                     <Form.Control type="text" name="txtFname" value={user} onChange={e => this.setState(Object.assign(this.state, {}, { user: e.target.value }))} placeholder="Create a Username" required />
                     <Form.Text className="text-muted desc-text">
                       5-10 Characters
                     </Form.Text>
+                    {Object.keys(this.state.usernameErr).map((key) => {
+                        return <div key={`${idx}`} style={{ color: 'black' }}>{usernameErr[key]}</div>;
+                      })}
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password: </Form.Label>
@@ -125,14 +208,23 @@ updateProfile = (e) => {
                     <Form.Text className="text-muted desc-text">
                       5-10 Characters
                     </Form.Text>
+                    {Object.keys(this.state.passwordErr).map((key) => {
+                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.passwordErr[key]}</div>;
+                      })}
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address: </Form.Label>
                     <Form.Control type="email" name="txtEmail" value={email} onChange={e => this.setState(Object.assign(this.state, {}, { email: e.target.value }))} placeholder="Enter your email address" required/>
+                    {Object.keys(this.state.emailErr).map((key) => {
+                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.emailErr[key]}</div>;
+                      })}
                   </Form.Group>
                   <Form.Group controlId="date">
                     <Form.Label>Birthday: </Form.Label>
                     <Form.Control type="date" value={birthday} onChange={e => this.setState(Object.assign(this.state, {}, { birthday: e.target.value }))} placeholder="Enter your birthday" />
+                    {Object.keys(this.state.birthdayErr).map((key, idx) => {
+                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.birthdayErr[key]}</div>;
+                      })}
                   </Form.Group>
                   <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.updateProfile}>
                     Update
@@ -144,12 +236,12 @@ updateProfile = (e) => {
               </Form.Row>
             </Form>
 
-           {/* <div>
-            { favoriteMovies && favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
+           <div>
+            { this.state.favoriteMovies.length && this.state.favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
               <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.toggleFavorite}>
                   Remove              
               </Button>
-            </div> */}
+            </div>
 
         </Container>      
       )
