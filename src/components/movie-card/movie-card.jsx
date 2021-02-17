@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './movie-card.scss';
 
 export class MovieCard extends React.Component {
+  
   render() {
     // given by MainView which is connected to the database via the movies endpoints in the API
     const { movie } = this.props;
