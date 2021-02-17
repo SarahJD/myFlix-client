@@ -2,6 +2,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "history": "^5.0.0",
+    "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
