@@ -52,11 +52,11 @@ export class ProfileView extends React.Component {
 
 // Update Profile
 updateProfile = (e) => {
-  console.log(test);
+  console.log(this.state);
    e.preventDefault();
   let token = localStorage.getItem('token');
   let user = localStorage.getItem('user');
-   axios.put('https://myflixwomo.herokuapp.com/users/' + user, {
+   axios.put('https://myflixwomo.herokuapp.com/users/' + user, this.state, {
      headers: { Authorization: `Bearer ${token}` }
    })
      .then(response => {
