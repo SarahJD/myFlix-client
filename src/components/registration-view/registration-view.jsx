@@ -6,7 +6,7 @@ import './registration-view.scss';
 export function RegistrationView() {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
   const [ password, setPassword ] = useState(''); // import useState() method with an empty string
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ birthday, setBirthday ] = useState('');
 
@@ -18,10 +18,6 @@ export function RegistrationView() {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-    if (birthday === '') {
-      formValidation();
-      return;
-    }
     axios.post('https://myflixwomo.herokuapp.com/users', {
       Username: username,
       Password: password,
