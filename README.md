@@ -12,8 +12,7 @@ This interface was built using the React library that handles data through the p
 
 ## 4. Which API the project uses
 
-The project uses the [REST API](https://github.com/SarahJD/myFlix) I have built myself. It was built with React.
-c
+The project uses the [REST API](https://github.com/SarahJD/myFlix) I have built myself. The client-side was built with React.
 
 ## 5. Design
 

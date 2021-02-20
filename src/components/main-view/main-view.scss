@@ -1,8 +1,24 @@
 .myFlix {
+  color: #bfb161;
   font-size: 5rem;
   margin: 1.8rem;
 }
 
+.myFlix:hover {
+  color: #000;
+}
+
 .myFlix-container {
+  justify-content: center;
+}
+
+.btn {
+  color: #bfb161;
+  white-space: nowrap;
+}
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }

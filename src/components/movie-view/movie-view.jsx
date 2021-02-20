@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './movie-view.scss';
  
 
 export class MovieView extends React.Component {
-
-  constructor() {
-    super();
-
-    this.state = {};
-  }
 
   render() {
     const { movie } = this.props;
@@ -22,22 +17,26 @@ export class MovieView extends React.Component {
         <Container className="container">
           <Row>
             <Col>
-              <h1 className="title">{movie.Title}</h1>
               <div>
-              <h2 className="subtitles">Genre:</h2>
-              <a className="links" href="#">{movie.Genre.Name}</a>  
+                <h1 className="title">{movie.Title}</h1>
+                <h2 className="subtitles">Director:</h2>
+                <Link to={`/directors/${movie.Director.Name}`}>
+                  <Button className="link" variant="link">{movie.Director.Name}</Button>
+                </Link>
               </div>
               <div>
-              <h2 className="subtitles">Director:</h2>
-              <a className="links" href="#">{movie.Director.Name}</a>
+                <h2 className="subtitles">Genre:</h2>
+                <Link to={`/genres/${movie.Genre.Name}`}>
+                  <Button className="link" variant="link">{movie.Genre.Name}</Button>
+                </Link>  
               </div>
               <div className="description">
-              <h2 className="subtitles">Description: </h2 >
-              <p>{movie.Description}</p>
+                <h2 className="subtitles">Description: </h2 >
+                <p>{movie.Description}</p>
               </div>
-              <Button variant="dark" type="submit" className="button" onClick={this.props.onClickBack}>
-                 Go back
-              </Button>
+              <Link to="/" >
+                <Button variant="dark" className="button mt-4 mb-4" type="submit">Go back</Button>
+              </Link>
             </Col>
             <Col>
               <img className="movie-poster mt-4 mb-4" src={movie.ImagePath} />
@@ -51,14 +50,13 @@ export class MovieView extends React.Component {
 }
 
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired, 
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    })
-  }).isRequired,
-  onClickBack: PropTypes.func.isRequired
+movie: PropTypes.shape({
+  Title: PropTypes.string.isRequired,
+  Description: PropTypes.string.isRequired,
+  ImagePath: PropTypes.string.isRequired, 
+  Genre: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired
+  })
+}).isRequired
 };
