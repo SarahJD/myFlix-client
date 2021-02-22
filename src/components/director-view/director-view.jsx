@@ -19,7 +19,7 @@ export function DirectorView (props) {
               <div>
                   <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={(e) => history.goBack()}>Go back</Button>
                 <h1>{director.Name}</h1>
-                <h2>{director.Birthyear}</h2>
+                <h2>Born in {director.Birthyear}</h2>
                 <p>{director.Bio}</p>
                 <h2>Some movies from this director</h2>
                 {movies.filter(m => m.Director.Name === director.Name).map(m => <MovieCard key={m._id} movie={m}/>)}
