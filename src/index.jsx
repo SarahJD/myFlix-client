@@ -2,16 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import Container from 'react-bootstrap/Container'; 
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
-import { MainView } from './components/main-view/main-view';
+import MainView from './components/main-view/main-view';
 import moviesApp from './reducers/reducers';
 
 // Import statement to indicate that you need to bundle './index.scss'
 import './index.scss';
 
-// Create Redux Store
+// Create Redux Store with combined reducer (moviesApp)
 const store = createStore(moviesApp, devToolsEnhancer());
 // when adding redux_store in addition it says"index.jsx:15 Uncaught ReferenceError: redux_store is not defined", but otherwise the redux devtools don't work
 
@@ -19,9 +18,9 @@ const store = createStore(moviesApp, devToolsEnhancer());
 class MyFlixApplication extends React.Component {
   render() {
       return (
-        <Container>
+        <Provider store={store}>
           <MainView/>
-        </Container>
+        </Provider>
       );
   }
 }
