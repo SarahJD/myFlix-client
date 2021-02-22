@@ -106,16 +106,16 @@ export class ProfileView extends React.Component {
       });
   }
 
-  // Toggle favorite movie
-  toggleFavorite = m => {
-    let newFavorites = [];
-    if (state.favoriteMovies.includes(m)) {
-      newFavorites = this.state.favoriteMovies.filter((movie) => movie._id !== m._id)
-      this.setState({ favoriteMovies: newFavorites });
-      return 
-    } 
-    this.setState(state => { favoriteMovies: state.favoriteMovies.push(m)})
-  }
+  // // Toggle favorite movie
+  // toggleFavorite = m => {
+  //   let newFavorites = [];
+  //   if (state.favoriteMovies.includes(m)) {
+  //     newFavorites = this.state.favoriteMovies.filter((movie) => movie._id !== m._id)
+  //     this.setState({ favoriteMovies: newFavorites });
+  //     return 
+  //   } 
+  //   this.setState(state => { favoriteMovies: state.favoriteMovies.push(m)})
+  // }
   
   formValidation = () => {
     const { username, password, email, birthday } = this.state;
@@ -232,13 +232,13 @@ console.log(emailErr);
               </Form.Row>
             </Form>
 
-           <div>
+           {/* <div>
             { this.state.favoriteMovies.length && this.state.favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
               <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.toggleFavorite}>
                   Remove              
               </Button>
             </div>
-
+ */}
         </Container>      
       )
     }
