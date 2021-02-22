@@ -5,6 +5,7 @@
     "indent": ["error", 2]
   },
   "globals": {
+    "export": "readonly",
     "document": "readonly",
     "window": "readonly", 
     "import": "readonly", 
