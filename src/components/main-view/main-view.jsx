@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { setMovies, setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
-import { LoginView } from '../login-view/login-view';
+import LoginView from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
@@ -26,7 +26,9 @@ class MainView extends React.Component {
     // Call the superclass constructor so React can initialize it
     super();
 
-    this.state = {};
+    this.state = {
+      accessToken: localStorage.getItem('token')
+    };
   }
 
   componentDidMount() {
@@ -34,13 +36,12 @@ class MainView extends React.Component {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       let user = localStorage.getItem('user');
-      this.props.setUser(user)
-      // this.setState({
-      //   user: localStorage.getItem('user')
-      // })
+      this.props.setUser(user);
       this.getMovies(accessToken);
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState){}
 
   // When a user is logged in, the movie list is displayed
   getMovies(token) {
@@ -56,17 +57,17 @@ class MainView extends React.Component {
     });
   }
 
-      // When a user successfully logs in, this function updates the user property in state to the particular user
-    onLoggedIn(authData) { // authData stands for the user and the token
-      console.log(authData);
-      this.props.setUser(user.Username)
-      // this.setState({
-      //   user: authData.user.Username
-      // });
-      localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user.Username);
-      this.getMovies(authData.token); 
-    }
+    //   // When a user successfully logs in, this function updates the user property in state to the particular user
+    // onLoggedIn(authData) { // authData stands for the user and the token
+    //   console.log(authData);
+    //   this.props.setUser(user.Username)
+    //   // this.setState({
+    //   //   user: authData.user.Username
+    //   // });
+    //   localStorage.setItem('token', authData.token);
+    //   localStorage.setItem('user', authData.user.Username);
+    //   this.getMovies(authData.token); 
+    // }
 
     handleLogOut = () => {
       localStorage.removeItem('token');
@@ -97,7 +98,7 @@ class MainView extends React.Component {
 
           <Switch>
             <Route exact path="/" render={() => {
-              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              if (!this.state.accessToken) return <LoginView setToken ={token => this.setState({accessToken: token})} />;
               {/* Home is the default route */}
               return <MoviesList movies={movies}/>
             }} />
