@@ -17,11 +17,16 @@
   width: 4.5rem;
   font-size: 1.5rem;
   display: inline-block;
-  margin-right: 2rem;
+  margin: 0 2rem 0 0;
 }
 
 .description {
-  margin: 1rem 0;
+  margin: 2rem 0;
+}
+
+.key-value-container {
+  display: flex;
+  align-items: center;
 }
 
 .button {
