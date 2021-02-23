@@ -31,7 +31,6 @@ export function DirectorView (props) {
     );
   }
 
-
 DirectorView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
