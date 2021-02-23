@@ -4,6 +4,7 @@
   margin-top: 10rem;
   overflow: hidden;
   height: 40rem;
+  min-width: 15rem;
   display: inline-block;
 }
 
@@ -13,4 +14,9 @@
 
 .linktext:hover {
   color: #000 !important;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
 }
