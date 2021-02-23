@@ -29,11 +29,36 @@ function user(state = '', action) {
   }
 }
 
+let storedUser = localStorage.getItem('user');
+const initialAuthState = storedUser ? { loggedIn: true, user: storedUser } : {};
+
+export function authentication(state = initialAuthState, action) {
+  switch (action.type) {
+    case 'LOGIN_REQUEST':
+      return {
+        loggingIn: true,
+        user: action.user
+      };
+    case 'LOGIN_SUCCESS':
+      return {
+        loggedIn: true,
+        user: action.user
+      };
+    case 'LOGIN_FAILURE':
+      return {};
+    // case userConstants.LOGOUT:
+    //   return {};
+    default:
+      return state
+  }
+}
+
 // Combined Reducers
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
-  user
+  user, 
+  authentication
 });
 
 export default moviesApp;
