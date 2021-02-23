@@ -5,32 +5,41 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 
 // import actions
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 import MoviesList from '../movies-list/movies-list';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 
 import './main-view.scss'; 
+import { propTypes } from 'react-bootstrap/esm/Image';
 
-export const history = createBrowserHistory();
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     // Call the superclass constructor so React can initialize it
     super();
 
-    this.state = {
-      user: null
-    };
+    this.state = {};
+  }
+
+  componentDidMount() {
+    // when page loads check if the user is logged in
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      let user = localStorage.getItem('user');
+      this.props.setUser(user)
+      // this.setState({
+      //   user: localStorage.getItem('user')
+      // })
+      this.getMovies(accessToken);
+    }
   }
 
   // When a user is logged in, the movie list is displayed
@@ -47,23 +56,13 @@ export class MainView extends React.Component {
     });
   }
 
-  componentDidMount() {
-    // when page loads check if the user is logged in
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      })
-      this.getMovies(accessToken);
-    }
-  }
-
-    // When a user successfully logs in, this function updates the user property in state to the particular user
+      // When a user successfully logs in, this function updates the user property in state to the particular user
     onLoggedIn(authData) { // authData stands for the user and the token
       console.log(authData);
-      this.setState({
-        user: authData.user.Username
-      });
+      this.props.setUser(user.Username)
+      // this.setState({
+      //   user: authData.user.Username
+      // });
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token); 
@@ -76,37 +75,25 @@ export class MainView extends React.Component {
     }
     
   render() {
-    const { movies } = this.props;
-    const { user } = this.state;   
-    // The LoginView is going to be shown if there is no user, only when the register route is on, is will not be shown (but the RegistrationView)
-    //if (!user && !window.location.href.includes('/register')) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-   // if (!user && window.location.href.includes('/register')) return <RegisterView />
-
-    // Before the movies have been loaded
-    //if (!movies) return <div className="main-view"/>;
-    // If the state of 'selectedMovie' is not null, that selected movie will be returned otherwise, all movies will be returned 
+    const { movies, user } = this.props;
+    
     return (
-      <Router history={history} >
+      <Router>
         <div className="main-view">
 
           {user && (
-            <Row>
-              <Col md={10}>
+            <Row className="main-row">
                 <Link to="/" className="myFlix" >
                   myFlix
                 </Link> 
-              </Col>
-              <Col>
-                <Link to="/profile">
-                  <Button className="btn" variant="dark">Profile</Button> 
-                </Link>
-              </Col>
-              <Col>
-                <Button className="btn" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
-              </Col>
+                <div>
+                  <Link to="/profile">
+                    <Button className="main-buttons" variant="dark">Profile</Button> 
+                  </Link>
+                  <Button className="main-buttons" variant="dark" type="submit" onClick={this.handleLogOut}>Log Out</Button> 
+                </div>
             </Row>
           )}
-
 
           <Switch>
             <Route exact path="/" render={() => {
@@ -115,15 +102,15 @@ export class MainView extends React.Component {
               return <MoviesList movies={movies}/>
             }} />
             <Route exact path="/register" render={() => <RegistrationView />} />
-            <Route exact path="/profile" render={() => <ProfileView user={this.state.user} movies={this.state.movies} />} />
+            <Route exact path="/profile" render={() => <ProfileView user={this.props.user} movies={this.props.movies} />} />
             <Route exact path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
             {/* Even if the movie object is loaded later, show the route */}
             <Route exact path="/genres/:name" render={({match}) => { 
               if (!movies) return <div className="main-view" />;
-              return <GenreView movies={this.state.movies} genre={ (movies.length > 0) ? movies.find(m => m.Genre.Name === match.params.name).Genre : {} }/>} }/>
+              return <GenreView movies={this.props.movies} genre={ (movies.length > 0) ? movies.find(m => m.Genre.Name === match.params.name).Genre : {} }/>} }/>
             <Route exact path="/directors/:name" render={({match}) => { 
               if (!movies) return <div className="main-view" />;
-              return <DirectorView movies={this.state.movies} director={ (movies.length > 0) ? movies.find(m => m.Director.Name === match.params.name).Director : {} }/>} }/>
+              return <DirectorView movies={this.props.movies} director={ (movies.length > 0) ? movies.find(m => m.Director.Name === match.params.name).Director : {} }/>} }/>
           </Switch>
         </div>
       </Router>
@@ -132,7 +119,15 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return { movies: state.movies, user: state.user }
 }
 
-export default connect(mapStateToProps, { setMovies }) (MainView);
+export default connect(mapStateToProps, { setMovies, setUser }) (MainView);
+
+MainView.proptypes = {
+  movies:propTypes.array,
+  user: propTypes.string,
+  setMovies: propTypes.func,
+  setUser: propTypes.func,
+  onLoggedIn: propTypes.func,
+}
