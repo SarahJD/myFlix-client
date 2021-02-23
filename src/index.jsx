@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 import MainView from './components/main-view/main-view';
 import moviesApp from './reducers/reducers';
@@ -11,8 +12,7 @@ import moviesApp from './reducers/reducers';
 import './index.scss';
 
 // Create Redux Store with combined reducer (moviesApp)
-const store = createStore(moviesApp, devToolsEnhancer());
-// when adding redux_store in addition it says"index.jsx:15 Uncaught ReferenceError: redux_store is not defined", but otherwise the redux devtools don't work
+const store = createStore(moviesApp, applyMiddleware(thunk));
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
