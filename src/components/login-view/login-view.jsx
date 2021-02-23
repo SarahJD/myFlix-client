@@ -2,31 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './login-view.scss';
+import { connect } from 'react-redux';
 
-export function LoginView(props) {
+import { login } from '../../actions/actions';
+
+function LoginView(props) {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
   const [ password, setPassword ] = useState(''); // import useState() method with an empty string
   const [usernameErr, setUsernameErr] = useState({});
   const [passwordErr, setPasswordErr] = useState({});
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = formValidation();
-    /* Send a request to the server for authentication */
-    axios.post('https://myflixwomo.herokuapp.com/login', {
-      Username: username,
-      Password: password
-    })
-    .then(response => {
-      const data = response.data;
-      props.onLoggedIn (data);  // triggers the onLoggedIn method of the "main-view.jsx" file
-    })
-    .catch(e => {
-      console.log('no such user');
-      formValidation('Invalid Credential');
-    });
+    /* Use action */
+    props.login(username, password);
+    history.goBack();
   };
 
   const formValidation = (serverError) => {
@@ -116,3 +110,15 @@ LoginView.propTypes = {
     password: PropTypes.string.isRequired, 
   })
 }
+
+function mapState(state) {
+  console.log(state);
+  const { loggingIn } = state.authentication;
+  return { loggingIn };
+}
+
+const actionCreators = {
+  login
+};
+
+export default connect(mapState, actionCreators)(LoginView);
