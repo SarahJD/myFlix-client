@@ -180,11 +180,12 @@ console.log(emailErr);
 
     render() {
       const { user, movies, email, password, birthday, favoriteMovies } = this.state;
+      console.log(this.state);
       return (
-        <Container>            
+        <Container className="main-container">            
             <Form className="form-inside-input" noValidate>
-              <Form.Row className="justify-content-md-center">
-                <Col md={3}>
+              <Form.Row>
+                <Col>
                   <h1 className="mb-4">My Profile</h1>
                   <div id="form-response"></div>
                   <Form.Group controlId="">
@@ -194,9 +195,8 @@ console.log(emailErr);
                       5-10 Characters
                     </Form.Text>
                     {Object.keys(this.state.usernameErr).map((key) => {
-                        return <div style={{ color: 'black' }}>{usernameErr[key]}</div>;
+                        return <div key={key} style={{ color: 'black' }}>{usernameErr[key]}</div>;
                       })}
-                      {/*inside div: key={`${idx}`}*/}
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password: </Form.Label>
@@ -205,21 +205,21 @@ console.log(emailErr);
                       5-10 Characters
                     </Form.Text>
                     {Object.keys(this.state.passwordErr).map((key) => {
-                        return <div style={{ color: 'black' }}>{this.state.passwordErr[key]}</div>;
+                        return <div key={key} style={{ color: 'black' }}>{this.state.passwordErr[key]}</div>;
                       })}
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address: </Form.Label>
                     <Form.Control type="email" name="txtEmail" value={email} onChange={e => this.setState(Object.assign(this.state, {}, { email: e.target.value }))} placeholder="Enter your email address" required/>
                     {Object.keys(this.state.emailErr).map((key) => {
-                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.emailErr[key]}</div>;
+                        return <div key={key} style={{ color: 'black' }}>{this.state.emailErr[key]}</div>;
                       })}
                   </Form.Group>
                   <Form.Group controlId="date">
                     <Form.Label>Birthday: </Form.Label>
                     <Form.Control type="date" value={birthday} onChange={e => this.setState(Object.assign(this.state, {}, { birthday: e.target.value }))} placeholder="Enter your birthday" />
-                    {Object.keys(this.state.birthdayErr).map((key, idx) => {
-                        return <div key={`${idx}`} style={{ color: 'black' }}>{this.state.birthdayErr[key]}</div>;
+                    {Object.keys(this.state.birthdayErr).map((key) => {
+                        return <div key={key} style={{ color: 'black' }}>{this.state.birthdayErr[key]}</div>;
                       })}
                   </Form.Group>
                   <Button variant="dark" className="button mt-4 mb-4 profile-btn" type="submit" onClick={this.updateProfile}>
@@ -243,3 +243,8 @@ console.log(emailErr);
       )
     }
 }
+
+// ProfileView.propTypes = {
+//   movies: propTypes.array,
+//   user: propTypes.shape
+// }
