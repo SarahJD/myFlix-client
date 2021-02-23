@@ -8,17 +8,18 @@
   color: #000;
 }
 
-.myFlix-container {
-  justify-content: center;
+// .main-view {
+//   display: flex;
+//   justify-content: center;
+// }
+
+.main-row {
+  display: flex;
+  justify-content: space-between;
 }
 
-.btn {
+.main-buttons {
   color: #bfb161;
   white-space: nowrap;
-}
-
-.movie-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  margin: 1rem;
 }
