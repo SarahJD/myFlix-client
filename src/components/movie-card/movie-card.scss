@@ -8,8 +8,17 @@
   display: inline-block;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  padding: 1rem;
+}
+
 .linktext {
   color: #bc0a0f !important;
+  padding: 0;
+  margin: 0;
 }
 
 .linktext:hover {
@@ -19,4 +28,10 @@
 .card-footer {
   display: flex;
   justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.description {
+  margin: 0 0 2.5rem 0 !important;
 }
