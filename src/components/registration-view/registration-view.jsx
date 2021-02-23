@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Button, Form } from 'react-bootstrap';
+import { Col, Button, Form } from 'react-bootstrap';
 import './registration-view.scss'; 
 
 export function RegistrationView() {
   const [ username, setUsername ] = useState(''); // import useState() method with an empty string
-  const [ password, setPassword ] = useState(''); // import useState() method with an empty string
+  const [ password, setPassword ] = useState(''); 
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ birthday, setBirthday ] = useState('');
@@ -114,9 +114,9 @@ export function RegistrationView() {
   };
 
   return (
-    <Form className="form-register">
-      <Form.Row className="justify-content-md-center">
-        <Col md={3}>
+    <Form className="form-register registration-form">
+      <Form.Row>
+        <Col>
           <h1 className="mb-4">Registration</h1>
           <Form.Group controlId="">
             <Form.Label>Username: </Form.Label>
