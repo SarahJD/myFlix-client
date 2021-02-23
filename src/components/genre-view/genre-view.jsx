@@ -33,7 +33,6 @@ export function GenreView (props) {
     );
   }
 
-
 GenreView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
