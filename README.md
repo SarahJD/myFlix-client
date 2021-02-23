@@ -17,3 +17,6 @@ The project uses the [REST API](https://github.com/SarahJD/myFlix) I have built 
 ## 5. Design
 
 The UI was inspired by this color palette which was adapted for contrast improvement: https://www.canva.com/colors/color-palettes/rose-and-gold/
+
+https://fontawesome.com/icons/star?style=regular
+https://fontawesome.com/icons/star?style=solid
