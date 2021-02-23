@@ -33,6 +33,16 @@
     "parcelRequire": "readonly",
     "module": "readonly",
     "define": "readonly",
-    "toString": "readonly"
+    "toString": "readonly",
+    "localStorage": "readonly",
+    "_setPrototypeOf": "readonly", 
+    "user": "readonly",
+    "_typeof": "readonly",
+    "globalThis": "readonly",
+    "Element": "readonly",
+    "clearInterval": "readonly",
+    "getComputedStyle": "readonly",
+    "self": "readonly",
+    "performance": "readonly"
   }
 }
