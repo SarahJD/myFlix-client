@@ -9,7 +9,7 @@
 }
 
 .movie-poster {
-  height: 20rem;
+  height: 25rem;
   margin: 8rem;
 }
 
@@ -21,7 +21,11 @@
 }
 
 .description {
-  margin: 2rem 0;
+  margin: 2rem 0 !important;
+}
+
+.description-text {
+  margin: 1rem 0 5rem 0;
 }
 
 .key-value-container {
