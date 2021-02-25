@@ -41,7 +41,7 @@ class MainView extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState){}
+  //shouldComponentUpdate(nextProps, nextState){}
 
   // When a user is logged in, the movie list is displayed
   getMovies(token) {
