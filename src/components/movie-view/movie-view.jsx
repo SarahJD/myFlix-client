@@ -34,7 +34,7 @@ export class MovieView extends React.Component {
               </div>
               <div className="description">
                 <h2 className="subtitles">Description: </h2 >
-                <p>{movie.Description}</p>
+                <p className="description-text">{movie.Description}</p>
               </div>
               <Link to="/" >
                 <Button variant="dark" className="button mt-4 mb-4" type="submit">Go back</Button>
