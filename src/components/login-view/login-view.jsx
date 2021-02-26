@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import './login-view.scss';
 import { connect } from 'react-redux';
@@ -15,12 +14,15 @@ function LoginView(props) {
   const [passwordErr, setPasswordErr] = useState({});
   const history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const isValid = formValidation();
+    console.log(username, password);
     /* Use action */
-    props.login(username, password);
-    history.goBack();
+    await props.login(username, password);
+    history.push('/movielist');
+    history.go();
+    // window.location.href = 'localhost:1234';
   };
 
   const formValidation = (serverError) => {
