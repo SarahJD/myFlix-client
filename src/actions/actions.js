@@ -54,7 +54,8 @@ export function failure(error) {
   } 
 }
 
-export function login(username, password) {
+export async function login(username, password) {
+  console.log(username);
   return dispatch => {
     dispatch(request({ username }));
     return axios.post('https://myflixwomo.herokuapp.com/login', {
@@ -62,6 +63,7 @@ export function login(username, password) {
       Password: password
     })
     .then(response => {
+      console.log(response);
       const data = response.data;
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', data.user.Username);
