@@ -1,15 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { Row, Col, Button } from 'react-bootstrap';
-
 import { connect } from 'react-redux';
-
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // import actions
-import { setMovies, setUser } from '../../actions/actions';
-import MoviesList from '../movies-list/movies-list';
+import { setMovies, setUser, login } from '../../actions/actions';
 
+import MoviesList from '../movies-list/movies-list';
 import LoginView from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieView } from '../movie-view/movie-view';
@@ -18,18 +17,12 @@ import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 
 import './main-view.scss'; 
-import { propTypes } from 'react-bootstrap/esm/Image';
-
 
 class MainView extends React.Component {
-  constructor() {
-    // Call the superclass constructor so React can initialize it
-    super();
-
-    this.state = {
-      accessToken: localStorage.getItem('token')
-    };
-  }
+  
+  state = {
+    accessToken: localStorage.getItem('token')
+  };
 
   componentDidMount() {
     // when page loads check if the user is logged in
@@ -44,7 +37,7 @@ class MainView extends React.Component {
   //shouldComponentUpdate(nextProps, nextState){}
 
   // When a user is logged in, the movie list is displayed
-  getMovies(token) {
+  getMovies = async(token) => {
     axios.get('https://myflixwomo.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token}`} // makes authenticated requests to API
     })
@@ -97,8 +90,9 @@ class MainView extends React.Component {
           )}
 
           <Switch>
-            <Route exact path="/" render={() => {
-              if (!this.state.accessToken) return <LoginView setToken ={token => this.setState({accessToken: token})} />;
+            <Route exact path="/" render={() => <LoginView setToken ={token => this.setState({accessToken: token})} loginUser = {(name, pass) => this.props.login(name, pass)} />} />
+            <Route exact path="/movielist" render={() => {
+              if (!this.state.accessToken) return <LoginView setToken ={token => this.setState({accessToken: token})} loginUser = {(name, pass) => this.props.login(name, pass)} />;
               {/* Home is the default route */}
               return <MoviesList movies={movies}/>
             }} />
@@ -123,12 +117,12 @@ let mapStateToProps = state => {
   return { movies: state.movies, user: state.user }
 }
 
-export default connect(mapStateToProps, { setMovies, setUser }) (MainView);
+export default connect(mapStateToProps, { setMovies, setUser, login }) (MainView);
 
 MainView.proptypes = {
-  movies:propTypes.array,
-  user: propTypes.string,
-  setMovies: propTypes.func,
-  setUser: propTypes.func,
-  onLoggedIn: propTypes.func,
+  movies: PropTypes.array,
+  user: PropTypes.string,
+  setMovies: PropTypes.func,
+  setUser: PropTypes.func,
+  login: PropTypes.func
 }
