@@ -77,7 +77,7 @@ class MainView extends React.Component {
 
           {user && (
             <Row className="main-row">
-                <Link to="/" className="myFlix" >
+                <Link to="/movielist" className="myFlix" >
                   myFlix
                 </Link> 
                 <div>
