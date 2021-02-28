@@ -54,24 +54,21 @@ export function failure(error) {
   } 
 }
 
-export async function login(username, password) {
-  console.log(username);
-  return dispatch => {
-    dispatch(request({ username }));
-    return axios.post('https://myflixwomo.herokuapp.com/login', {
-      Username: username,
-      Password: password
-    })
-    .then(response => {
-      console.log(response);
-      const data = response.data;
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', data.user.Username);
-      dispatch(success(data))
-    })
-    .catch(e => {
-      console.log('no such user');
-      dispatch(failure(e.toString()));
-    });
-  };    
-}
+export const login = (username, password) => dispatch => {
+  dispatch(request({ username }));
+  return axios.post('https://myflixwomo.herokuapp.com/login', {
+    Username: username,
+    Password: password
+  })
+  .then(response => {
+    console.log(response);
+    const data = response.data;
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', data.user.Username);
+    dispatch(success(data))
+  })
+  .catch(e => {
+    console.log('no such user');
+    dispatch(failure(e.toString()));
+  });
+};
