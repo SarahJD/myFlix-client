@@ -11,7 +11,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 // ACTION CREATORS
 
 // initialize the movies list with movies
-export function setMovies(value){
+export const setMovies = (value) => {
   return { 
     type: SET_MOVIES, 
     value 
@@ -19,35 +19,35 @@ export function setMovies(value){
 }
 
 // set the filter to filter the movies list
-export function setFilter(value){
+export const setFilter = (value) => {
   return { 
     type: SET_FILTER, 
     value 
   };
 }
 
-export function setUser(value){
+export const setUser = (value) => {
   return {
     type: SET_USER,
     value
   }
 };
 
-export function request(user) { 
+export const request = (user) => { 
   return { 
     type: LOGIN_REQUEST, 
     user 
   } 
 }
 
-export function success(user) { 
+export const success = (user) => { 
   return { 
     type: LOGIN_SUCCESS, 
     user 
   } 
 }
     
-export function failure(error) { 
+export const failure = (error) => { 
   return { 
     type: LOGIN_FAILURE, 
     error 
