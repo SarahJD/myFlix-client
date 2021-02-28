@@ -12,11 +12,11 @@ export function toggleFavorites(props) {
   toggleMovie = m => {
     let favoriteMovies = props.user.FavoriteMovies;
     if (favoriteMovies.includes(m)) {
-      return axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
-      return document.getElementsByClassName('img').src('../../img/star-regular.svg');
+      axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
+      document.getElementsByClassName('img').src('../../img/star-regular.svg');
     } else {
-      return axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
-      return document.getElementsByClassName('img').src('../../img/star-solid.svg');
+      axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
+      document.getElementsByClassName('img').src('../../img/star-solid.svg');
      }
   }
 
