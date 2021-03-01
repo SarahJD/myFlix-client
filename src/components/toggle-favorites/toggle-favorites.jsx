@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import starRegular from '../../img/star-regular.svg';
+import starSolid from '../../img/star-solid.svg';
 //import PropTypes from 'prop-types';
 
 import './toggle-favorites.scss'; 
 
-import { MovieCard } from '../movie-card/movie-card';
+export default function ToggleFavorites(props) {
 
-export function toggleFavorites(props) {
-  const [ user, setUser ] = useState({});
-
-  toggleMovie = m => {
-    let favoriteMovies = props.user.FavoriteMovies;
-    if (favoriteMovies.includes(m)) {
-      axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
-      document.getElementsByClassName('img').src('../../img/star-regular.svg');
-    } else {
-      axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`);
-      document.getElementsByClassName('img').src('../../img/star-solid.svg');
+  const toggleMovie = async m => {
+    let favoriteMovies = props.favoriteMovies;
+    let accessToken = localStorage.getItem('token');
+    let presentFavorite = favoriteMovies.includes(m);
+    let newFavorites = [];
+    if (presentFavorite && (accessToken !== null)) {
+      //await axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${token}`}});
+      newFavorites = favoriteMovies.filter((movie) => movie._id !== m._id)
+      props.handleSetFavorites(newFavorites)
+    }
+    if (!presentFavorite && (accessToken !== null)) {
+      //await axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${token}`}});
+      newFavorites.push(m);
+      props.handleSetFavorites(newFavorites);
      }
+    //localStorage.setItem('favoriteMovies', JSON.stringify(FavoriteMovies));
   }
 
   return (
-    <div>
-      { favoriteMovies.length && favoriteMovies.map(m => <MovieCard key={m._id} movie={m} />)} 
-      <img src="" onClick={this.toggleMovie}/>
+    <div onClick={() => toggleMovie(props.movie)}>
+      {<img id="star" src={props.favoriteMovies.includes(props.movie) ? starSolid : starRegular} alt="star"></img>}
     </div>
   );
 }
