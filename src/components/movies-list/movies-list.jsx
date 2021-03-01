@@ -1,16 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './movies-list.scss';
-
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 import { MovieCard } from '../movie-card/movie-card';
-import { propTypes } from 'react-bootstrap/esm/Image';
-
-const mapStateToProps = state => {
-  const { visibilityFilter } = state;
-  return { visibilityFilter };
-};
 
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
@@ -32,10 +26,16 @@ function MoviesList(props) {
   </div>
 }
 
+const mapStateToProps = state => {
+  const { visibilityFilter } = state;
+  return { visibilityFilter };
+};
+
 // mapStateToProps fransforms the store into props that the MoviesList component will use
 export default connect(mapStateToProps) (MoviesList);
 
-MoviesList.propTypes = {
-  movies: propTypes.array,
-  visibilityFilter: propTypes.func
-}
+// MoviesList.propTypes = {
+//   movies: PropTypes.array,
+//   visibilityFilter: PropTypes.func
+// }
+
