@@ -65,6 +65,7 @@ export const login = (username, password) => dispatch => {
     const data = response.data;
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', data.user.Username);
+    localStorage.setItem('favoriteMovies', JSON.stringify(data.user.FavoriteMovies));
     dispatch(success(data))
   })
   .catch(e => {
