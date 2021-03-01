@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 
 import { setFilter } from '../../actions/actions';
 import './visibility-filter-input.scss'; 
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 function VisibilityFilterInput(props) {
   return <Form.Control className="input-filter"
@@ -20,8 +19,8 @@ export default connect(
   { setFilter }
 ) (VisibilityFilterInput);
 
-VisibilityFilterInput.propTypes = {
-  setFilter: propTypes.func,
-  visibilityFilter: propTypes.func
-}
+// VisibilityFilterInput.propTypes = {
+//   setFilter: PropTypes.func,
+//   visibilityFilter: PropTypes.func
+// }
 
