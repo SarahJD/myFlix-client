@@ -28,13 +28,11 @@ class MainView extends React.Component {
     // when page loads check if the user is logged in
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      let user = localStorage.getItem('user');
-      this.props.setUser(user);
+      // let user = localStorage.getItem('user');
+      // this.props.setUser(user);
       this.getMovies(accessToken);
     }
   }
-
-  //shouldComponentUpdate(nextProps, nextState){}
 
   // When a user is logged in, the movie list is displayed
   getMovies = async(token) => {
@@ -50,23 +48,11 @@ class MainView extends React.Component {
     });
   }
 
-    //   // When a user successfully logs in, this function updates the user property in state to the particular user
-    // onLoggedIn(authData) { // authData stands for the user and the token
-    //   console.log(authData);
-    //   this.props.setUser(user.Username)
-    //   // this.setState({
-    //   //   user: authData.user.Username
-    //   // });
-    //   localStorage.setItem('token', authData.token);
-    //   localStorage.setItem('user', authData.user.Username);
-    //   this.getMovies(authData.token); 
-    // }
-
-    handleLogOut = () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.open("/", "_self")
-    }
+  handleLogOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.open("/", "_self")
+  }
     
   render() {
     const { movies, user } = this.props;
