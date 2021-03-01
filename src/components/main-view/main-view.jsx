@@ -19,7 +19,6 @@ import { ProfileView } from '../profile-view/profile-view';
 import './main-view.scss'; 
 
 class MainView extends React.Component {
-  
   state = {
     accessToken: localStorage.getItem('token')
   };
