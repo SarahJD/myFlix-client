@@ -8,21 +8,20 @@ import { connect } from 'react-redux';
 import { login } from '../../actions/actions';
 
 function LoginView(props) {
-  const [ username, setUsername ] = useState(''); // import useState() method with an empty string
-  const [ password, setPassword ] = useState(''); // import useState() method with an empty string
+  const [username, setUsername] = useState(''); // import useState() method with an empty string
+  const [password, setPassword] = useState(''); // import useState() method with an empty string
   const [usernameErr, setUsernameErr] = useState({});
   const [passwordErr, setPasswordErr] = useState({});
   const history = useHistory();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = formValidation();
     console.log(username, password);
     /* Use action */
     await props.login(username, password);
-    history.push('/movielist');
+    history.push('/movieslist');
     history.go();
-    // window.location.href = 'localhost:1234';
   };
 
   const formValidation = (serverError) => {
@@ -72,30 +71,27 @@ function LoginView(props) {
   };
 
   return (
-    <Form className= "form-login">
+    <Form className="form-login">
       <Form.Row className="justify-content-md-center">
-        <h1 className="mb-4 mt-4">Login to myFlix</h1>
+        <h1 className="heading-login">Login to myFlix</h1>
       </Form.Row>
       <Form.Row className="justify-content-md-center">
-        <Col md={3}>
+        <Col>
           <Form.Group controlId="">
             <Form.Label>Username: </Form.Label>
-            <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter Username" required/>
-            {Object.keys(usernameErr).map((key) => {
-            return <div style={{ color: 'black' }}>{usernameErr[key]}</div>;
-          })}
+            <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter Username" required />
+            {Object.keys(usernameErr).map((key) => <div style={{ color: 'black' }}>{usernameErr[key]}</div>)}
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password: </Form.Label>
-            <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter Password" required />
-            {Object.keys(passwordErr).map((key) => {
-            return <div style={{ color: 'black' }}>{passwordErr[key]}</div>;
-          })}
+            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password" required />
+            {Object.keys(passwordErr).map((key) => <div style={{ color: 'black' }}>{passwordErr[key]}</div>)}
           </Form.Group>
           <Button variant="dark" className="button mt-4 mb-4" type="submit" onClick={handleSubmit}>
             Submit
           </Button>
-          <p>Don't have an account? 
+          <p>
+            Don't have an account?
             <Link to="register">
               <Button variant="link" className="register-link">Register</Button>
             </Link>
@@ -108,10 +104,10 @@ function LoginView(props) {
 
 LoginView.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,  
-    password: PropTypes.string.isRequired, 
-  })
-}
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }),
+};
 
 function mapState(state) {
   console.log(state);
@@ -120,7 +116,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  login
+  login,
 };
 
 export default connect(mapState, actionCreators)(LoginView);
