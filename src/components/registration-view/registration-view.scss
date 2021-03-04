@@ -2,7 +2,15 @@
   color: #bfb161 !important;
 }
 
-.registration-form {
-  width: 19rem;
-  margin: 0 auto;
+@media (min-width: 480px) {
+  .registration-form {
+    width: 19rem;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-form {
+    width: 100%;
+  }
 }
