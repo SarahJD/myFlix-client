@@ -1,4 +1,10 @@
 .input-filter {
-  width: 50%;
-  margin: 2rem 2rem 2rem 3rem;
+  width: 30%;
+  margin: 1rem 0 2rem;
+}
+
+@media (max-width: 480px) {
+  .input-filter {
+    width: 90%;
+  }
 }
