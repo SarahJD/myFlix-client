@@ -6,3 +6,13 @@
   display: flex;
   justify-content: center;
 }
+
+.form-container {
+  width: 30%;
+}
+
+@media (max-width: 580px) {
+  .form-container {
+    width: 100%;
+  }
+}
