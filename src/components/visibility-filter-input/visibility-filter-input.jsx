@@ -4,23 +4,25 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 
 import { setFilter } from '../../actions/actions';
-import './visibility-filter-input.scss'; 
+import './visibility-filter-input.scss';
 
 function VisibilityFilterInput(props) {
-  return <Form.Control className="input-filter"
-    onChange={e => props.setFilter(e.target.value)}
-    value={props.visibilityFilter}
-    placeholder="Search for a Movie Title" 
-  />;
+  return (
+    <Form.Control
+      className="input-filter"
+      onChange={(e) => props.setFilter(e.target.value)}
+      value={props.visibilityFilter}
+      placeholder="Search for a Movie Title"
+    />
+  );
 }
 
 export default connect(
   null,
-  { setFilter }
-) (VisibilityFilterInput);
+  { setFilter },
+)(VisibilityFilterInput);
 
-// VisibilityFilterInput.propTypes = {
-//   setFilter: PropTypes.func,
-//   visibilityFilter: PropTypes.func
-// }
-
+VisibilityFilterInput.propTypes = {
+  setFilter: PropTypes.func,
+  visibilityFilter: PropTypes.string,
+};
