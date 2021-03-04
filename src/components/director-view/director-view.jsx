@@ -13,7 +13,7 @@ export function DirectorView(props) {
   const history = useHistory();
 
   return (
-    <>
+    <React.Fragment>
       <Container className="container">
         <Row>
           <Col>
@@ -31,7 +31,7 @@ export function DirectorView(props) {
           </Col>
         </Row>
       </Container>
-    </>
+    </React.Fragment>
   );
 }
 
