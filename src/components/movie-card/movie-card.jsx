@@ -8,15 +8,15 @@ import './movie-card.scss';
 
 export class MovieCard extends React.Component {
   state = {
-    favoriteMovies: []
+    favoriteMovies: [],
   }
 
-  componentDidMount(){
-    this.setState({ favoriteMovies: JSON.parse(localStorage.getItem('favoriteMovies'))})
+  componentDidMount() {
+    this.setState({ favoriteMovies: JSON.parse(localStorage.getItem('favoriteMovies')) });
   }
 
-  handleSetFavorites = favoriteMovies => {
-    this.setState({ favoriteMovies })
+  handleSetFavorites = (favoriteMovies) => {
+    this.setState({ favoriteMovies });
   }
 
   render() {
@@ -27,12 +27,15 @@ export class MovieCard extends React.Component {
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text className="description-text">{movie.Description.substring(0, 100)}...</Card.Text>
+          <Card.Text className="description-text">
+            {movie.Description.substring(0, 100)}
+            ...
+          </Card.Text>
           <div className="card-footer">
-            <Link to={`/movies/${movie._id}`} >
+            <Link to={`/movies/${movie._id}`}>
               <Button variant="link" className="linktext">Read More</Button>
             </Link>
-            <ToggleFavorites movie={movie} favoriteMovies={this.state.favoriteMovies} handleSetFavorites={favorites => this.handleSetFavorites(favorites)} />
+            <ToggleFavorites movie={movie} favoriteMovies={this.state.favoriteMovies} handleSetFavorites={(favorites) => this.handleSetFavorites(favorites)} />
           </div>
         </Card.Body>
       </Card>
@@ -44,10 +47,10 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired, 
+    ImagePath: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
       Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    })
-  }).isRequired
+      Description: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
