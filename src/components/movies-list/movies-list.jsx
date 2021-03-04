@@ -11,31 +11,31 @@ function MoviesList(props) {
   let filteredMovies = movies;
 
   if (visibilityFilter !== '') {
-    filteredMovies = movies.filter(m => m.Title.includes(visibilityFilter));
+    filteredMovies = movies.filter((m) => m.Title.includes(visibilityFilter));
   }
 
-  if (!movies) 
-    return <div className="main-view" />
+  if (!movies) { return <div className="main-view" />; }
 
-  return <div className="movies-list">
-    <VisibilityFilterInput visibilityFilter={visibilityFilter} className="search-bar"/>
-    <div className="class-container">
-    {/* rendering all movies without filtering */}
-    {filteredMovies.map(m => <MovieCard key={m._id} movie={m} />)}
+  return (
+    <div className="movies-list">
+      <VisibilityFilterInput visibilityFilter={visibilityFilter} />
+      <div className="class-container">
+        {/* rendering all movies without filtering */}
+        {filteredMovies.map((m) => <MovieCard key={m._id} movie={m} />)}
+      </div>
     </div>
-  </div>
+  );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { visibilityFilter } = state;
   return { visibilityFilter };
 };
 
 // mapStateToProps fransforms the store into props that the MoviesList component will use
-export default connect(mapStateToProps) (MoviesList);
+export default connect(mapStateToProps)(MoviesList);
 
-// MoviesList.propTypes = {
-//   movies: PropTypes.array,
-//   visibilityFilter: PropTypes.func
-// }
-
+MoviesList.propTypes = {
+  movies: PropTypes.array,
+  visibilityFilter: PropTypes.string,
+};
