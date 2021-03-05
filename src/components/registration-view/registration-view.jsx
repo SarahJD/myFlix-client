@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Col, Button, Form } from 'react-bootstrap';
 import './registration-view.scss';
 
-export function RegistrationView() {
+function RegistrationView() {
   const [username, setUsername] = useState(''); // import useState() method with an empty string
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,12 +25,9 @@ export function RegistrationView() {
       Birthday: birthday,
     })
       .then((response) => {
-        const { data } = response;
-        console.log(data);
         window.open('/', '_self'); // '_self' in order to open the page in the current tab and redirect to login ('/')
       })
       .catch((e) => {
-        console.log('error registering the user');
         formValidation();
       });
   };
@@ -164,3 +161,6 @@ export function RegistrationView() {
     </Form>
   );
 }
+
+export default RegistrationView;
+
