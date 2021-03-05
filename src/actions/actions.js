@@ -49,7 +49,6 @@ export const login = (username, password) => (dispatch) => {
     Password: password,
   })
     .then((response) => {
-      console.log(response);
       const { data } = response;
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', data.user.Username);
@@ -57,7 +56,6 @@ export const login = (username, password) => (dispatch) => {
       dispatch(success(data));
     })
     .catch((e) => {
-      console.log('no such user');
       dispatch(failure(e.toString()));
     });
 };
