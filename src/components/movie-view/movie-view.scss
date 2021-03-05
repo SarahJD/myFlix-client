@@ -24,11 +24,15 @@
 }
 
 .description {
-  margin: 2rem 0 !important;
+  margin: 2rem 0 1rem !important;
+}
+
+.description-title {
+  margin-bottom: 1rem;
 }
 
 .description-text {
-  margin: 1rem 0 5rem 0;
+  font-size: 1.2rem;
 }
 
 .key-value-container {
