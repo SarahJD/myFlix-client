@@ -6,9 +6,9 @@ import {
 } from 'react-bootstrap';
 import './director-view.scss';
 
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
 
-export function DirectorView(props) {
+function DirectorView(props) {
   const { movies, director } = props;
   const history = useHistory();
 
@@ -24,7 +24,7 @@ export function DirectorView(props) {
                 Born in
                 {director.Birthyear}
               </h2>
-              <p>{director.Bio}</p>
+              <p className="bio-text">{director.Bio}</p>
               <h2>Some movies from this director</h2>
               {movies.filter((m) => m.Director.Name === director.Name).map((m) => <MovieCard key={m._id} movie={m} />)}
             </div>
@@ -34,6 +34,11 @@ export function DirectorView(props) {
     </React.Fragment>
   );
 }
+
+DirectorView.defaultProps = {
+  movies: undefined,
+  director: undefined,
+};
 
 DirectorView.propTypes = {
   movies: PropTypes.arrayOf(
@@ -48,3 +53,5 @@ DirectorView.propTypes = {
     Birthyear: PropTypes.string,
   }),
 };
+
+export default DirectorView;
