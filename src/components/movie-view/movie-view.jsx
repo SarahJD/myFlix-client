@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button, Col, Container, Row,
-} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import ToggleFavorites from '../toggle-favorites/toggle-favorites';
 import './movie-view.scss';
 
-export class MovieView extends React.Component {
-  state = {
-    favoriteMovies: [],
+class MovieView extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      favoriteMovies: [],
+    };
   }
 
   componentDidMount() {
@@ -49,7 +50,7 @@ export class MovieView extends React.Component {
                 </Link>
               </div>
               <div className="description">
-                <h2 className="subtitles">Description: </h2>
+                <h2 className="subtitles description-title">Description: </h2>
                 <p className="description-text">{movie.Description}</p>
               </div>
               <Link to="/movieslist">
@@ -77,3 +78,5 @@ MovieView.propTypes = {
     }),
   }).isRequired,
 };
+
+export default MovieView;
