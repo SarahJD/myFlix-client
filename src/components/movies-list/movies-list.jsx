@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import './movies-list.scss';
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
 
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
@@ -36,6 +36,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(MoviesList);
 
 MoviesList.propTypes = {
-  movies: PropTypes.array,
-  visibilityFilter: PropTypes.string,
+  movies: PropTypes.array.isRequired,
+  visibilityFilter: PropTypes.string.isRequired,
 };
