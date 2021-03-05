@@ -17,7 +17,6 @@ function LoginView(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = formValidation();
-    console.log(username, password);
     /* Use action */
     await props.login(username, password);
     history.push('/movieslist');
@@ -25,8 +24,8 @@ function LoginView(props) {
   };
 
   const formValidation = (serverError) => {
-    const usernameErr = {};
-    const passwordErr = {};
+    // const usernameErr = {};
+    // const passwordErr = {};
     let isValid = true;
 
     if (serverError === 'Invalid Credential') {
@@ -91,7 +90,7 @@ function LoginView(props) {
             Submit
           </Button>
           <p>
-            Don't have an account?
+            Don&apos;t have an account?
             <Link to="register">
               <Button variant="link" className="register-link">Register</Button>
             </Link>
@@ -104,13 +103,17 @@ function LoginView(props) {
 
 LoginView.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
+    username: PropTypes.string,
+    password: PropTypes.string,
   }),
+  login: PropTypes.func.isRequired,
+};
+
+LoginView.defaultProps = {
+  user: {},
 };
 
 function mapState(state) {
-  console.log(state);
   const { loggingIn } = state.authentication;
   return { loggingIn };
 }
