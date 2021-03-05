@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+
 import starRegular from '../../img/star-regular.svg';
 import starSolid from '../../img/star-solid.svg';
-// import PropTypes from 'prop-types';
-
 import './toggle-favorites.scss';
 
 export default function ToggleFavorites(props) {
@@ -13,12 +13,14 @@ export default function ToggleFavorites(props) {
     const presentFavorite = favoriteMovies.includes(m);
     let newFavorites = [];
     if (presentFavorite && (accessToken !== null)) {
-      // await axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${token}`}});
+      // const user = localStorage.getItem('user');
+      // await axios.put(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${accessToken}` } });
       newFavorites = favoriteMovies.filter((movie) => movie._id !== m._id);
       props.handleSetFavorites(newFavorites);
     }
     if (!presentFavorite && (accessToken !== null)) {
-      // await axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${token}`}});
+      // const user = localStorage.getItem('user');
+      // await axios.post(`https://myflixwomo.herokuapp.com/users/${user}/Movies/${m._id}`, { headers: { Authorization: `Bearer ${accessToken}` } });
       newFavorites.push(m);
       props.handleSetFavorites(newFavorites);
     }
@@ -31,3 +33,8 @@ export default function ToggleFavorites(props) {
     </div>
   );
 }
+
+ToggleFavorites.propTypes = {
+  favoriteMovies: PropTypes.array,
+  handleSetFavorites: PropTypes.func.isRequired,
+};
