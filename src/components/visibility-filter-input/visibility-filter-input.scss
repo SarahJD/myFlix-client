@@ -1,6 +1,8 @@
-.input-filter {
+.input-filter,
+.input-filter:active {
   width: 30%;
   margin: 1rem 0 2rem;
+  resize: none;
 }
 
 @media (max-width: 480px) {
