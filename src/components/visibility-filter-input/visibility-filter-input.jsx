@@ -23,6 +23,6 @@ export default connect(
 )(VisibilityFilterInput);
 
 VisibilityFilterInput.propTypes = {
-  setFilter: PropTypes.func,
-  visibilityFilter: PropTypes.string,
+  setFilter: PropTypes.func.isRequired,
+  visibilityFilter: PropTypes.string.isRequired,
 };
