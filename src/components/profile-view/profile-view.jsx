@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import {
-  Button, Container, Form, Row, Col,
+  Button, Container, Form, Col,
 } from 'react-bootstrap';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import './profile-view.scss';
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
 
-export class ProfileView extends React.Component {
+class ProfileView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -227,5 +227,8 @@ export class ProfileView extends React.Component {
 
 ProfileView.propTypes = {
   movies: PropTypes.array,
-  user: PropTypes.string,
+  user: PropTypes.string.isRequired,
+  favoriteMovies: PropTypes.array,
 };
+
+export default ProfileView;
