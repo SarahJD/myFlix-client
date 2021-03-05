@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import ToggleFavorites from '../toggle-favorites/toggle-favorites';
 import './movie-card.scss';
 
-export class MovieCard extends React.Component {
+class MovieCard extends React.Component {
   state = {
     favoriteMovies: [],
+    user: ''
   }
 
   componentDidMount() {
@@ -27,7 +28,7 @@ export class MovieCard extends React.Component {
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text className="description-text">
+          <Card.Text className="moviecard-description-text">
             {movie.Description.substring(0, 100)}
             ...
           </Card.Text>
@@ -54,3 +55,5 @@ MovieCard.propTypes = {
     }),
   }).isRequired,
 };
+
+export default MovieCard;
