@@ -10,21 +10,18 @@ import moviesApp from './reducers/reducers';
 // Import statement to indicate that you need to bundle './index.scss'
 import './index.scss';
 
-require('babel-core/register');
-require('babel-polyfill');
+require('@babel/polyfill');
+require('@babel/register');
 
 // Create Redux Store with combined reducer (moviesApp)
 const store = createStore(moviesApp, applyMiddleware(thunk));
 
-// Main component (will eventually use all the others)
-class MyFlixApplication extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <MainView />
-      </Provider>
-    );
-  }
+function MyFlixApplication() {
+  return (
+    <Provider store={store}>
+      <MainView />
+    </Provider>
+  );
 }
 
 // Find the root of your app
