@@ -3,14 +3,36 @@
   background-color: #bfb161;
   margin-top: 10rem;
   overflow: hidden;
-  height: 40rem;
+  height: 38rem;
+  min-width: 15rem;
   display: inline-block;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  padding: 1rem;
 }
 
 .linktext {
   color: #bc0a0f !important;
+  padding: 0;
+  margin: 0;
 }
 
 .linktext:hover {
   color: #000 !important;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.movie-card-description-text {
+  margin: 0 0 2.5rem 0 !important;
+  font-size: 1rem;
 }

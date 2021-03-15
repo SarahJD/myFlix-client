@@ -1,3 +1,7 @@
+.heading-login {
+  margin: 2rem 0;
+}
+
 .register-link {
   color: #efc081;
   margin-left: 0.5rem;
@@ -5,4 +9,28 @@
 
 .register-link:hover {
   color: #fff;
+}
+
+.form-login {
+  width: 20%;
+}
+
+@media (max-width: 580px) {
+  .form-login {
+    width: 100%;
+  }
+
+  .heading-login {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .form-login {
+    width: 60%;
+  }
+
+  .heading-login {
+    font-size: 2.2rem;
+  }
 }

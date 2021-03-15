@@ -1,24 +1,34 @@
+.main-view {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-heading-row {
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+}
+
 .myFlix {
   color: #bfb161;
-  font-size: 5rem;
-  margin: 1.8rem;
+  font-size: 6rem;
 }
 
 .myFlix:hover {
   color: #000;
 }
 
-.myFlix-container {
-  justify-content: center;
-}
-
-.btn {
+.main-buttons {
   color: #bfb161;
   white-space: nowrap;
+  margin: 1rem;
 }
 
-.movie-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+@media (max-width: 580px) {
+  .main-view {
+    margin: 1rem;
+  }
 }
