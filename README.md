@@ -14,7 +14,7 @@ I included the possiblity to toggle movies in order to include resp. delete them
 
 ## 3. Hosted version of the app
 
-The client-side of the project is deployed with Netlify: **URL**
+The client-side of the project is deployed with Heroku: https://my-flix-womovies.herokuapp.com/
 
 ## 4. Used Technologies
 
